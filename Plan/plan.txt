@@ -1,0 +1,69 @@
+Ish Elani layihesi
+
+Sistemi 2 hissede ibaretdir
+	Worker(Ishchi)
+        Employer(Ishe Goturen)
+
+Bu projectde olacaqlarin mueyyen qismini yazmisham , size dersde basha saldigim sheylerin her biri olmalidir , notification system , butun melumatlarin .json fayla yazilmagi  ,filter system(axtarish zamani her iki terefde(worker ve employer))
+butun project exceptionlari handle olunsun
+//FILE system i , butun melumatlar , fayla yazilsin
+//Systemde bash veren her  proses log.json faylina yazilsin
+//Project chokmemelidir
+
+
+Ilk olaraq sistemde username,password sorushsun , hemen o user in worker ve ya Employer olduguna esasen ekran achilsin.
+Worker (class)
+id
+name
+surname
+Sheher
+Phone
+Age
+CV(elave CV ler ola biler)
+
+CV
+Ixtisas
+Oxudugu mekteb
+Uni qebul bali
+Bacariqlari(Skills(meselen:C#,C++,Java ve s.))
+Companies(ishlediyi yerler)
+Umumi ishe bashlama tarixi bitirme tarixi
+Bildiyi xarici diller(Language(hansi dil, hansi seviyyede bilir))
+Ferqlenme Diplomu var ya yox
+GITLINK
+LINKEDIN
+
+
+Employer
+
+id
+name
+surname
+Sheher
+Phone
+Age
+Vacancies
+
+dersde deyilenler:
+sistemde iki cur user var. is paylashan(ishe goturen)(employer), ishci (ish axtaran) (employee)
+
+ishci kimi daxil olanda:
+
+elanlara bax (sartirovka etmek.)
+muraciet et => id e gore sechim. cv sechimi. bid, remove (muracieti silme)
+cv bolmesi => add, delete, update (update bir bir olsun, istenilen sheyi update elemek)
+
+
+
+
+ishe goturen kimi daxil olmaq:
+elan add, update, delete
+ishcilere baxmaq (filter sistemi)
+ishcilere bildirim gonder
+ish elani paylash
+
+bildirishlere baxmaq (elana gore bildirishlere baxmaq)
+
+
+
+
