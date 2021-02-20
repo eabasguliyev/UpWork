@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------
+
+Arxa teref:
+CustomId class var ki hansi ki icherisinde id (guid) saxlayir. Constructor'da guid generate edir.
+
+CV ve Elan classlari var
+
+Elan classi ozunde:
+	bildirishleri saxlayir. (ishciler terefinden gelen bildirishler)
+	
+User abstract classi var.
+Employee abstract classi User abstract classindan torenir.
+Employee abstract classindan hem Worker hem de Employer classlari yaranir.
+
+Worker classi ozunde:
+	CVlerin listini saxlayir.
+
+Database classi var ozunde saxladiqlari:
+	Worker'leri saxlayir.
+	Employee'leri saxlayir.
+	Elanlari saxlayir
+-------------------------------------------------------------------------------
+
+Girish terefi
+iki sechime esasen hansi nov girishin olacagh sechilir.
+
+ILogin interface var
+icherisinde Login(User user, Employee employees)
+
+bu interface'den yeni classlar yaranir hansi ki WorkerLogin ve EmployeeLogin
+
+bunlarin instancedan istifade ederek uyghun userler login olur.
+
+-------------------------------------------------------------------------------
+
+Employer terefi:
+
+Elan bolmesi:
+	elanlari elave elemek. elanlar yaradildiqdan sonra database'daki elanlar listine elave olunur.
+	db elanlar listinden sechib update elemek (update sechime gore olsun)
+	db elanlar listinden sechib delete elemek.
+
+ishciler terefi:
+	database'da olan ishcilerin siyahisi ekrana chixarmaq.
+	ide gore sechib hemin ishcilere bildirish gondermek. (ishciye geden bildirish nece olacaq? elanin melumati gonderilecek?)
+	bildirish gonderildikden sonra ise hemin bildirishi leghv etmek funksiyasi.
+	demeli bildirish gonderildikden sonra workerlere gonderilen bildirishler siyahisindan bildirishin varlighi yoxlanilmalidir. varsa bildirish leghv etmek imkani, yoxdusa bildirishi silmek imkani. bildirishler elanin idsine gore olacaq.
+	
+bildirishler terefi(baxmaq) :
+
+
+
+-------------------------------------------------------------------------------
+
+Employee terefi:
+
+
+	
