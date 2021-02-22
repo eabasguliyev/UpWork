@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +44,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\Id.cs" />
+    <Compile Include="Abstracts\User.cs" />
+    <Compile Include="ConsoleInterface\ConsoleScreen.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Entities\Advert.cs" />
+    <Compile Include="Entities\SkillBase.cs" />
+    <Compile Include="Entities\Contact.cs" />
+    <Compile Include="Entities\Cv.cs" />
+    <Compile Include="Entities\Employer.cs" />
+    <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\SalaryRange.cs" />
+    <Compile Include="Entities\Skill.cs" />
+    <Compile Include="Entities\Social.cs" />
+    <Compile Include="Entities\Timeline.cs" />
+    <Compile Include="Entities\Vacancy.cs" />
+    <Compile Include="Entities\Worker.cs" />
+    <Compile Include="Entities\WorkPlaces.cs" />
+    <Compile Include="Enums\NumericTypes.cs" />
+    <Compile Include="Enums\SkillLevelEnum.cs" />
+    <Compile Include="Enums\UserTypeEnum.cs" />
+    <Compile Include="Enums\UserAccessEnum.cs" />
+    <Compile Include="ExceptionHandle.cs" />
+    <Compile Include="Exceptions\DatabaseException.cs" />
+    <Compile Include="Exceptions\InvalidPhoneFormat.cs" />
+    <Compile Include="Exceptions\MailException.cs" />
+    <Compile Include="Exceptions\RegisterException.cs" />
+    <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Hash\Hash.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Interfaces\ICv.cs" />
+    <Compile Include="Interfaces\IHash.cs" />
+    <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Logger\ConsoleLogger.cs" />
+    <Compile Include="Sides\UserAccessSide.cs" />
+    <Compile Include="UserAccess\Credentials.cs" />
+    <Compile Include="UserAccess\UserAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

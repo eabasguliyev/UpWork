@@ -49,10 +49,7 @@ ishciler terefi:
 bildirishler terefi(baxmaq) :
 
 
-
 -------------------------------------------------------------------------------
 
 Employee terefi:
 
-
-	
