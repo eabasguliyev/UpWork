@@ -8,11 +8,17 @@ namespace UpWork.ConsoleInterface
     {
         public static IList<string> UserAccess { get; }
         public static IList<string> UserType { get; }
+        public static IList<string> WorkerSideMainMenu { get; }
+        public static IList<string> CvSectionMenu { get; }
+        public static IList<string> SkillLevels { get; }
 
         static ConsoleScreen()
         {
-            UserAccess = new List<string>() {"Login", "Register", "Back"};
+            UserAccess = new List<string>() {"Login", "Register", "Exit"};
             UserType = new List<string>() {"Worker", "Employer"};
+            WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Logout"};
+            CvSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
+            SkillLevels = new List<string>() {"Beginner", "Intermediate", "Advanced"};
         }
 
         public static int Input(int length)

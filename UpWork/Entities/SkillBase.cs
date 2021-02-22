@@ -6,5 +6,11 @@ namespace UpWork.Entities
     {
         public string Name { get; set; }
         public SkillLevelEnum Level { get; set; }
+
+        public override string ToString()
+        {
+            return $@"Name: {Name}
+Level: {Level}";
+        }
     }
 }

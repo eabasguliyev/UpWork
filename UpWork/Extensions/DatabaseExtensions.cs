@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace UpWork.Helpers
+namespace UpWork.Extensions
 {
-    public static class DatabaseHelper
+    public static class DatabaseExtension
     {
         public static bool CheckMail(this Database.Database database, string mail)
         {

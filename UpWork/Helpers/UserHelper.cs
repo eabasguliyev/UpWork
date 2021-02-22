@@ -92,5 +92,30 @@ namespace UpWork.Helpers
             }
         }
 
+        public static void ValidateLink(string link)
+        {
+            if (link.StartsWith("https://"))
+                return;
+
+            throw new InvalidLinkFormat("Link format is not valid!");
+        }
+
+        public static Guid InputGuid()
+        {
+            var logger = new ConsoleLogger();
+
+            Console.WriteLine("Enter guid: ");
+            while (true)
+            {
+                var str = GetString("Guid can not be empty!");
+
+                if (Guid.TryParse(str, out Guid guid))
+                    return guid;
+                
+
+                logger.Error("Invalid guid format!");
+            }
+        }
+
     }
 }

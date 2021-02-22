@@ -1,6 +1,8 @@
-﻿namespace UpWork.Entities
+﻿using UpWork.Abstracts;
+
+namespace UpWork.Entities
 {
-    public class Advert
+    public class Advert:Id
     {
         public string Category { get; set; }
         public string Position { get; set; }

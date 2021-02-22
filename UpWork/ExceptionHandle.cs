@@ -21,5 +21,22 @@ namespace UpWork
 
             return false;
         }
+
+        public static bool Handle(Action action)
+        {
+            try
+            {
+                action.Invoke();
+                return true;
+            }
+            catch (Exception e)
+            {
+                var logger = new ConsoleLogger();
+
+                logger.Error(e.Message);
+            }
+
+            return false;
+        }
     }
 }

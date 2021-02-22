@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
+using UpWork.Entities;
 using UpWork.Sides;
 
 namespace UpWork
@@ -12,6 +13,17 @@ namespace UpWork
         {
             var db = new Database.Database();
 
+            db.Users.Add(new Worker()
+            {
+                Name = "Elgun",
+                Surname = "Abasquliyev",
+                Age = 21,
+                City = "Baku",
+                Username = "elgun",
+                Password = "elgun",
+                Mail = "elgun@gmail.com",
+                Phone = "077433434"
+            });
             UserAccessSide.Start(db);
         }
     }
