@@ -12,7 +12,7 @@ namespace UpWork.Entities
         public string School { get; set; }
         public int UniScore { get; set; }
         public IList<Skill> Skills { get; set; }
-        public IList<WorkPlaces> WorkPlaces { get; set; }
+        public IList<WorkPlace> WorkPlaces { get; set; }
         public Timeline Timeline { get; set; }
         public IList<Language> Languages { get; set; }
         public bool HonorsDiploma { get; set; }
@@ -27,7 +27,7 @@ namespace UpWork.Entities
         public Cv()
         {
             Skills = new List<Skill>();
-            WorkPlaces = new List<WorkPlaces>();
+            WorkPlaces = new List<WorkPlace>();
             Languages = new List<Language>();
             Socials = new List<Social>();
         }
@@ -61,7 +61,9 @@ namespace UpWork.Entities
                 }
             }
 
+            sb.Append("Timeline:\n");
             sb.Append(Timeline);
+            sb.Append("\n");
 
             if (Languages.Count != 0)
             {

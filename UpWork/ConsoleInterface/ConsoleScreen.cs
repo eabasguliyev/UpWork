@@ -11,6 +11,7 @@ namespace UpWork.ConsoleInterface
         public static IList<string> WorkerSideMainMenu { get; }
         public static IList<string> CvSectionMenu { get; }
         public static IList<string> SkillLevels { get; }
+        public static IList<string> CvUpdateMenu { get; }
 
         static ConsoleScreen()
         {
@@ -19,6 +20,10 @@ namespace UpWork.ConsoleInterface
             WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Logout"};
             CvSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             SkillLevels = new List<string>() {"Beginner", "Intermediate", "Advanced"};
+            CvUpdateMenu = new List<string>()
+                {"Speciality", "School", "UniScore", "WorkPlaces", "Timeline", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
+
+
         }
 
         public static int Input(int length)

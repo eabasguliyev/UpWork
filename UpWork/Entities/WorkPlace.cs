@@ -2,16 +2,17 @@
 
 namespace UpWork.Entities
 {
-    public class Social:Id
+    public class WorkPlace:Id
     {
-        public string Name { get; set; }
-        public string Link { get; set; }
+        public string Company { get; set; }
+        public Timeline Timeline { get; set; }
+
 
         public override string ToString()
         {
             return $@"{base.ToString()}
-Name: {Name}
-Link: {Link}";
+Company: {Company}
+{Timeline}";
         }
     }
 }

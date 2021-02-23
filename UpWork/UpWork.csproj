@@ -60,8 +60,9 @@
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Entities\Vacancy.cs" />
     <Compile Include="Entities\Worker.cs" />
-    <Compile Include="Entities\WorkPlaces.cs" />
+    <Compile Include="Entities\WorkPlace.cs" />
     <Compile Include="Enums\CvSectionEnum.cs" />
+    <Compile Include="Enums\CvUpdateChoices.cs" />
     <Compile Include="Enums\WorkerSideMainMenu.cs" />
     <Compile Include="Enums\NumericTypes.cs" />
     <Compile Include="Enums\SkillLevelEnum.cs" />
@@ -69,13 +70,14 @@
     <Compile Include="Enums\UserAccessEnum.cs" />
     <Compile Include="ExceptionHandle.cs" />
     <Compile Include="Exceptions\DatabaseException.cs" />
-    <Compile Include="Exceptions\NotFoundCvException.cs" />
+    <Compile Include="Exceptions\CvException.cs" />
     <Compile Include="Exceptions\InvalidLinkFormat.cs" />
     <Compile Include="Exceptions\InvalidPhoneFormat.cs" />
     <Compile Include="Exceptions\MailException.cs" />
     <Compile Include="Exceptions\RegisterException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Extensions\DatabaseExtensions.cs" />
+    <Compile Include="Extensions\CvExtensions.cs" />
     <Compile Include="Extensions\WorkerExtensions.cs" />
     <Compile Include="Hash\Hash.cs" />
     <Compile Include="Helpers\CvHelper.cs" />
