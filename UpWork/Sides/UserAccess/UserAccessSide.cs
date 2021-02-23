@@ -8,9 +8,11 @@ using UpWork.Exceptions;
 using UpWork.Extensions;
 using UpWork.Helpers;
 using UpWork.Logger;
+using UpWork.Sides.Employee;
+using UpWork.Sides.Employer;
 using UpWork.UserAccess;
 
-namespace UpWork.Sides
+namespace UpWork.Sides.UserAccess
 {
     public static class UserAccessSide
     {
@@ -76,15 +78,15 @@ namespace UpWork.Sides
 
                 try
                 {
-                    var loggedUser = UserAccess.UserAccess.Login(credentials, db.Users);
+                    var loggedUser = UpWork.UserAccess.UserAccess.Login(credentials, db.Users);
 
                     if (loggedUser is Worker worker)
                     {
                         WorkerSide.Start(worker, db);
                     }
-                    else if (loggedUser is Employer employer)
+                    else if (loggedUser is Entities.Employer employer)
                     {
-                        Console.WriteLine($"Employer:\n{employer}");
+                        EmployerSide.Start(employer, db);
                     }
                     break;
                 }
@@ -142,7 +144,7 @@ namespace UpWork.Sides
                         Age = age,
                     };
                 else
-                    newUser = new Employer()
+                    newUser = new Entities.Employer()
                     {
                         Name = name,
                         Surname = surname,
@@ -156,7 +158,7 @@ namespace UpWork.Sides
 
                 try
                 {
-                    UserAccess.UserAccess.Register(newUser, db.Users);
+                    UpWork.UserAccess.UserAccess.Register(newUser, db.Users);
                     logger.Info("Successfully created account. You can login now.");
                     ConsoleScreen.Clear();
                     break;

@@ -4,7 +4,7 @@ using UpWork.Entities;
 using UpWork.Enums;
 using UpWork.Logger;
 
-namespace UpWork.Sides
+namespace UpWork.Sides.Employee
 {
     public static class WorkerSide
     {

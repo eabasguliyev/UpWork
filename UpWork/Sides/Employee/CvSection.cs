@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
@@ -8,7 +7,7 @@ using UpWork.Extensions;
 using UpWork.Helpers;
 using UpWork.Logger;
 
-namespace UpWork.Sides
+namespace UpWork.Sides.Employee
 {
     public static class CvSection
     {
@@ -250,10 +249,6 @@ namespace UpWork.Sides
                 var updateChoice =
                     (CvUpdateChoices)ConsoleScreen.Input(ConsoleScreen.CvUpdateMenu.Count);
 
-                /*
-Speciality = 1, School, UniScore, WorkPlaces, Timeline, Languages, HonorsDiploma, Socials, Back
-                 *
-                 */
                 switch (updateChoice)
                 {
                     case CvUpdateChoices.Speciality:
@@ -501,9 +496,7 @@ Speciality = 1, School, UniScore, WorkPlaces, Timeline, Languages, HonorsDiploma
                             break;
                         }
                 }
-
                 ConsoleScreen.Clear();
-
             }
         }
     }

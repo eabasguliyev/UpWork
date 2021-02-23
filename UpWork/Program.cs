@@ -6,6 +6,7 @@ using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
 using UpWork.Sides;
+using UpWork.Sides.UserAccess;
 
 namespace UpWork
 {
@@ -37,6 +38,35 @@ namespace UpWork
                 UniScore = 450
             });
 
+            db.Users.Add(new Employer()
+            {
+                Name = "Abil",
+                Surname = "Yaqublu",
+                Username = "abil",
+                Password = "abil",
+                Mail = "abil@gmail.com",
+                City = "Sumqayit",
+                Age = 16,
+                Phone = "1234"
+            });
+
+            (db.Users[1] as Employer).Vacancies.Add(new Vacancy()
+            {
+                Contact = new Contact(){Mail = "abil@gmail.com"},
+                Ad = new Advert()
+                {
+                    Category = "IT",
+                    Company = "Code",
+                    JobDescription = "hershey",
+                    Contact = "Abil",
+                    Education = "Highschool",
+                    Experience = "2 il",
+                    Position = "Manager",
+                    Region = "Baku",
+                    Requirements = "allah verenden",
+                    Salary = new SalaryRange() { From = 200, To = 300},
+                }
+            });
 
             UserAccessSide.Start(db);
         }

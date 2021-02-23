@@ -15,5 +15,20 @@ namespace UpWork.Entities
         public string JobDescription { get; set; }
         public string Company { get; set; }
         public string Contact { get; set; }
+
+        public override string ToString()
+        {
+            return $@"{base.ToString()}
+Category: {Category}
+Position: {Position}
+Region: {Region}
+Salary: {Salary}
+Education: {Education}
+Experience: {Experience}
+Requirements: {Requirements}
+JobDescription: {JobDescription}
+Company: {Company}
+Contact: {Contact}";
+        }
     }
 }

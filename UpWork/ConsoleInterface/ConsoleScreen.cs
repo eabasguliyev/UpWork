@@ -13,6 +13,9 @@ namespace UpWork.ConsoleInterface
         public static IList<string> SkillLevels { get; }
         public static IList<string> CvUpdateMenu { get; }
 
+        public static IList<string> EmployerSideMainMenu { get; }
+        public static IList<string> AdsSectionMenu { get; }
+
         static ConsoleScreen()
         {
             UserAccess = new List<string>() {"Login", "Register", "Exit"};
@@ -23,7 +26,8 @@ namespace UpWork.ConsoleInterface
             CvUpdateMenu = new List<string>()
                 {"Speciality", "School", "UniScore", "WorkPlaces", "Timeline", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
 
-
+            EmployerSideMainMenu = new List<string>() {"Your ads", "See workers", "See notifications", "Logout"};
+            AdsSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
         }
 
         public static int Input(int length)

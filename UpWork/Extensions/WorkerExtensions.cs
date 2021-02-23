@@ -23,13 +23,13 @@ namespace UpWork.Extensions
 
         public static void DeleteCv(this Worker worker, Guid guid)
         {
-            var index = worker.Cvs.ToList().FindIndex(c => ((Cv) c).Guid == guid);
+            var cv = worker.Cvs.SingleOrDefault(c => ((Cv) c).Guid == guid);
 
 
-            if (index < 0)
+            if (cv == null)
                 throw new CvException($"There is no cv associated this guid -> {guid}");
             
-            worker.Cvs.RemoveAt(index);
+            worker.Cvs.Remove(cv);
         }
 
         public static ICv GetCv(this Worker worker, Guid guid)
