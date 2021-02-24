@@ -22,7 +22,8 @@ namespace UpWork.Entities
 Category: {Category}
 Position: {Position}
 Region: {Region}
-Salary: {Salary}
+Salary: 
+{Salary}
 Education: {Education}
 Experience: {Experience}
 Requirements: {Requirements}

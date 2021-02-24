@@ -55,6 +55,36 @@ namespace UpWork.Sides.Employer
                     }
                     case AdsSectionEnum.Update:
                     {
+                        while (true)
+                        {
+                            Console.Clear();
+                            if (!ExceptionHandle.Handle(employer.ShowAllAds))
+                            {
+                                ConsoleScreen.Clear();
+                                break;
+                            }
+
+                            var id = UserHelper.InputGuid();
+
+                            try
+                            {
+                                var vacancy = employer.GetVacancy(id);
+
+                                VacancyUpdateSideStart(vacancy);
+                                if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to update another Vacancy?",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                    break;
+                                continue;
+                            }
+                            catch (Exception e)
+                            {
+                                logger.Error(e.Message);
+                            }
+
+                            if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                break;
+                        }
                         break;
                     }
                     case AdsSectionEnum.Delete:
@@ -89,6 +119,125 @@ namespace UpWork.Sides.Employer
                     case AdsSectionEnum.Back:
                     {
                         adsSectionLoop = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static void VacancyUpdateSideStart(Vacancy vacancy)
+        {
+            var logger = new ConsoleLogger();
+
+            var vacancyUpdateLoop = true;
+
+            while (vacancyUpdateLoop)
+            {
+                Console.Clear();
+
+                Console.WriteLine(vacancy);
+
+                Console.WriteLine();
+
+                ConsoleScreen.PrintMenu(ConsoleScreen.VacancyUpdateMenu, ConsoleColor.DarkGreen);
+
+                var updateChoice = (VacancyUpdateChoices) ConsoleScreen.Input(ConsoleScreen.VacancyUpdateMenu.Count);
+
+                switch (updateChoice)
+                {
+                    case VacancyUpdateChoices.Mail:
+                    {
+
+                        while (true)
+                        {
+                            var mail = VacancyHelper.InputData("Mail");
+                            if (ExceptionHandle.Handle(UserHelper.ValidateMail, mail))
+                            {
+                                vacancy.Contact.Mail = mail;
+                                break;
+                            }
+                        }
+
+                        logger.Info("Mail updated!");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Phones:
+                    {
+                        break;
+                    }
+                    case VacancyUpdateChoices.Category:
+                    {
+                        vacancy.Ad.Category = VacancyHelper.InputData("Category");
+
+                        logger.Info("Category updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Position:
+                    {
+                        vacancy.Ad.Position = VacancyHelper.InputData("Position");
+
+                        logger.Info("Position updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Region:
+                    {
+                        vacancy.Ad.Region = VacancyHelper.InputData("Region");
+
+                        logger.Info("Region updated");
+                            break;
+                    }
+                    case VacancyUpdateChoices.Salary:
+                    {
+                        Console.WriteLine("New Salary");
+                        vacancy.Ad.Salary.From = VacancyHelper.InputSalary("From: ");
+                        vacancy.Ad.Salary.To = VacancyHelper.InputSalary("To: ");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Education:
+                    {
+                        vacancy.Ad.Education = VacancyHelper.InputData("Education");
+
+                        logger.Info("Education updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Experience:
+                    {
+                        vacancy.Ad.Experience = VacancyHelper.InputData("Experience");
+
+                        logger.Info("Experience updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Requirements:
+                    {
+                        vacancy.Ad.Requirements = VacancyHelper.InputData("Requirements");
+
+                        logger.Info("Requirements updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.JobDescription:
+                    {
+                        vacancy.Ad.JobDescription = VacancyHelper.InputData("Job Description");
+
+                        logger.Info("Job Description updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Company:
+                    {
+                        vacancy.Ad.Company = VacancyHelper.InputData("Company");
+
+                        logger.Info("Company updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Contact:
+                    {
+                        vacancy.Ad.Contact = VacancyHelper.InputData("Contact");
+
+                        logger.Info("Contact updated");
+                        break;
+                    }
+                    case VacancyUpdateChoices.Back:
+                    {
+                        vacancyUpdateLoop = false;
                         break;
                     }
                 }

@@ -21,7 +21,7 @@ namespace UpWork.Entities
         public override string ToString()
         {
             return $@"{base.ToString()}
-{GetCv()}";
+{GetCvData()}";
         }
 
         public Cv()
@@ -32,7 +32,7 @@ namespace UpWork.Entities
             Socials = new List<Social>();
         }
 
-        public string GetCv()
+        public string GetCvData()
         {
             var sb = new StringBuilder();
             sb.Append($"Speciality: {Speciality}\n");

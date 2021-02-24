@@ -9,8 +9,6 @@ namespace UpWork.Sides.Employer
     {
         public static void Start(Entities.Employer employer, Database.Database db)
         {
-            var logger = new ConsoleLogger();
-
             var employerSideMainLoop = true;
 
             while (employerSideMainLoop)

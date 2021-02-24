@@ -41,7 +41,7 @@ namespace UpWork.Helpers
 
                             return data;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             logger.Error("Input must be numeric value!");
                         }

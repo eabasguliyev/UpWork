@@ -63,6 +63,7 @@
     <Compile Include="Entities\WorkPlace.cs" />
     <Compile Include="Enums\AdsSectionEnum.cs" />
     <Compile Include="Enums\CvSectionEnum.cs" />
+    <Compile Include="Enums\VacancyUpdateEnum.cs" />
     <Compile Include="Enums\CvUpdateChoices.cs" />
     <Compile Include="Enums\EmployerSideMainMenu.cs" />
     <Compile Include="Enums\WorkerSideMainMenu.cs" />

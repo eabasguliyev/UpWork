@@ -15,6 +15,7 @@ namespace UpWork.ConsoleInterface
 
         public static IList<string> EmployerSideMainMenu { get; }
         public static IList<string> AdsSectionMenu { get; }
+        public static IList<string> VacancyUpdateMenu { get; }
 
         static ConsoleScreen()
         {
@@ -28,6 +29,11 @@ namespace UpWork.ConsoleInterface
 
             EmployerSideMainMenu = new List<string>() {"Your ads", "See workers", "See notifications", "Logout"};
             AdsSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
+            VacancyUpdateMenu = new List<string>()
+            {
+                "Mail", "Phones", "Category", "Position", "Region", "Salary", "Education",
+                "Experience", "Requirements", "Job Description", "Company", "Contact", "Back"
+            };
         }
 
         public static int Input(int length)

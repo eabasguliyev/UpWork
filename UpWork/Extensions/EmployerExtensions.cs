@@ -31,5 +31,15 @@ namespace UpWork.Extensions
 
             employer.Vacancies.Remove(vacancy);
         }
+
+        public static Vacancy GetVacancy(this Employer employer, Guid guid)
+        {
+            var vacancy = employer.Vacancies.SingleOrDefault(v => v.Guid == guid);
+
+            if (vacancy == null)
+                throw new VacancyException($"There is no vacancy associated this guid -> {guid}");
+
+            return vacancy;
+        }
     }
 }

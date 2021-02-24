@@ -20,8 +20,6 @@ namespace UpWork.Sides.UserAccess
         {
             Console.Title = "UpWork";
 
-            var logger = new ConsoleLogger();
-
             var userAccessLoop = true;
 
             while (userAccessLoop)

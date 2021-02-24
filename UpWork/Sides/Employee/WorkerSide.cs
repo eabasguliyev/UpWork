@@ -10,7 +10,6 @@ namespace UpWork.Sides.Employee
     {
         public static void Start(Worker user, Database.Database db)
         {
-            var logger = new ConsoleLogger();
 
             var workerSideMainLoop = true;
 
