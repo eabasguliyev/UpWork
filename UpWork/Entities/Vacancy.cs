@@ -1,4 +1,6 @@
-﻿using UpWork.Abstracts;
+﻿using System;
+using System.Collections.Generic;
+using UpWork.Abstracts;
 
 namespace UpWork.Entities
 {
@@ -7,6 +9,12 @@ namespace UpWork.Entities
         public Contact Contact { get; set; }
         public Advert Ad { get; set; }
 
+        public IList<Guid> RequestsFromWorkers { get; set; }
+
+        public Vacancy()
+        {
+            RequestsFromWorkers = new List<Guid>();
+        }
         public override string ToString()
         {
             return $@"{base.ToString()}

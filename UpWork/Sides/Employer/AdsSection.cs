@@ -163,6 +163,58 @@ namespace UpWork.Sides.Employer
                     }
                     case VacancyUpdateChoices.Phones:
                     {
+                        if (vacancy.Contact.Phones.Count != 3 && ConsoleScreen.DisplayMessageBox("Info", "Do you want to add phone number or delete?",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        {
+                            Console.WriteLine("Add phone number: ");
+
+                            var maxPhoneNumbers = 3 - vacancy.Contact.Phones.Count;
+                            while (maxPhoneNumbers > 0)
+                            {
+                                var phone = VacancyHelper.InputData("Phone");
+
+                                if (ExceptionHandle.Handle(UserHelper.ValidatePhone, phone))
+                                {
+                                    vacancy.Contact.Phones.Add(phone);
+                                    maxPhoneNumbers--;
+
+                                    if (maxPhoneNumbers == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more phone number?",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                        break;
+                                    continue;
+                                }
+                                if (maxPhoneNumbers != 3 && ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            if (vacancy.Contact.Phones.Count > 0)
+                            {
+                                while (true)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Delete phone number: ");
+                                    
+                                    for (var i = 0; i < vacancy.Contact.Phones.Count; i++)
+                                    {
+                                        Console.WriteLine($"{i + 1}. {vacancy.Contact.Phones[i]}");   
+                                    }
+
+                                    var phoneIndex = ConsoleScreen.Input(vacancy.Contact.Phones.Count) - 1;
+
+                                    vacancy.Contact.Phones.RemoveAt(phoneIndex);
+
+                                    logger.Info("Phone number deleted");
+
+
+                                    if (vacancy.Contact.Phones.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more phone number?",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                        break;
+                                }
+                            }
+                        }
                         break;
                     }
                     case VacancyUpdateChoices.Category:
@@ -270,7 +322,7 @@ namespace UpWork.Sides.Employer
                     newVacancy.Contact.Phones.Add(phone);
                     maxPhoneNumbers--;
 
-                    if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more phone number?",
+                    if (maxPhoneNumbers == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more phone number?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                         break;
                     continue;

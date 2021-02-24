@@ -8,6 +8,9 @@ namespace UpWork.Entities
 {
     public class Cv:Id, ICv
     {
+        private bool _isPublic = true;
+
+        public bool IsPublic => _isPublic;
         public string Speciality { get; set; }
         public string School { get; set; }
         public int UniScore { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UpWork.Entities;
 using UpWork.Exceptions;
@@ -41,5 +42,22 @@ namespace UpWork.Extensions
 
             return cv;
         }
+
+        public static void SeeAds(this Worker worker, IList<Vacancy> vacancies)
+        {
+            if (vacancies == null)
+                throw new ArgumentNullException(nameof(vacancies));
+
+            if (vacancies.Count == 0)
+                throw new VacancyException("There is no vacancy!");
+
+
+            foreach (var vacancy in vacancies)
+            {
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine(vacancy);
+            }
+        }
+
     }
 }

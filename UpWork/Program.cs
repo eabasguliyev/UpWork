@@ -68,6 +68,24 @@ namespace UpWork
                 }
             });
 
+            (db.Users[1] as Employer).Vacancies.Add(new Vacancy()
+            {
+                Contact = new Contact() { Mail = "abil@gmail.com" },
+                Ad = new Advert()
+                {
+                    Category = "Programming",
+                    Company = "Step",
+                    JobDescription = "lab lab",
+                    Contact = "Resul",
+                    Education = "Uni",
+                    Experience = "3 il",
+                    Position = "C# Developer",
+                    Region = "Baku",
+                    Requirements = "allah verenden",
+                    Salary = new SalaryRange() { From = 400, To = 600 },
+                }
+            });
+
             UserAccessSide.Start(db);
         }
     }

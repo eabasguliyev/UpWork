@@ -84,6 +84,7 @@
     <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Extensions\CvExtensions.cs" />
     <Compile Include="Extensions\EmployerExtensions.cs" />
+    <Compile Include="Extensions\VacancyExtensions.cs" />
     <Compile Include="Extensions\WorkerExtensions.cs" />
     <Compile Include="Hash\Hash.cs" />
     <Compile Include="Helpers\CvHelper.cs" />

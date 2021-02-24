@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using UpWork.Entities;
 using UpWork.Enums;
+using UpWork.Exceptions;
 using UpWork.Logger;
 
 namespace UpWork.Helpers
@@ -30,6 +35,24 @@ namespace UpWork.Helpers
 
                 return salary;
             }
+        }
+
+        public static Vacancy GetVacancy(Guid vacId, IList<Vacancy> vacancies)
+        {
+            if (vacId == Guid.Empty)
+                throw new ArgumentNullException(nameof(vacId), "Vacancy id is empty!");
+            if (vacancies == null)
+                throw new VacancyException("Vacancy is null");
+            if (vacancies.Count == 0)
+                throw new VacancyException("There is no vacancy!");
+
+            var vacancy = vacancies.SingleOrDefault(v => v.Guid == vacId);
+
+            if (vacancy == null)
+                throw new VacancyException($"There is no vacancy associated this id -> {vacId}");
+            return vacancy;
+
+            
         }
     }
 }
