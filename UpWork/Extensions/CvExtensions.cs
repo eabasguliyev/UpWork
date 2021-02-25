@@ -48,5 +48,25 @@ namespace UpWork.Extensions
 
             cv.Socials.Remove(social);
         }
+
+        public static bool CheckEmployerRequest(this Cv cv, Guid employerId)
+        {
+            if (cv.RequestsFromEmployers.Count == 0)
+                return false;
+
+            var req = cv.RequestsFromEmployers.SingleOrDefault(i => i == employerId);
+
+            return req != Guid.Empty;
+        }
+
+        public static void SendRequest(this Cv cv, Guid employerId)
+        {
+            cv.RequestsFromEmployers.Add(employerId);
+        }
+
+        public static void CancelRequest(this Cv cv, Guid employerId)
+        {
+            cv.RequestsFromEmployers.Remove(employerId);
+        }
     }
 }

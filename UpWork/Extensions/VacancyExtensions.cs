@@ -12,20 +12,22 @@ namespace UpWork.Extensions
             if (vacancy.RequestsFromWorkers.Count == 0)
                 return false;
 
-            var req = vacancy.RequestsFromWorkers.SingleOrDefault(i => i == workerId);
+            var req = vacancy.RequestsFromWorkers.SingleOrDefault(i => i.Key == workerId);
 
-            if (req == Guid.Empty)
-                return false;
-
-            return true;
+            return req.Key != Guid.Empty;
         }
 
-        public static void SendRequest(this Vacancy vacancy, Guid workerId)
+        public static void SendRequest(this Vacancy vacancy, Guid workerId, Guid CvId)
         {
-            vacancy.RequestsFromWorkers.Add(workerId);
+            vacancy.RequestsFromWorkers.Add(workerId, CvId);
         }
 
         public static void CancelRequest(this Vacancy vacancy, Guid workerId)
+        {
+            vacancy.RequestsFromWorkers.Remove(workerId);
+        }
+
+        public static void RemoveRequest(this Vacancy vacancy, Guid workerId)
         {
             vacancy.RequestsFromWorkers.Remove(workerId);
         }

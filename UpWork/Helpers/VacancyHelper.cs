@@ -54,5 +54,21 @@ namespace UpWork.Helpers
 
             
         }
+
+        public static void SeeAds(IList<Vacancy> vacancies)
+        {
+            if (vacancies == null)
+                throw new ArgumentNullException(nameof(vacancies));
+
+            if (vacancies.Count == 0)
+                throw new VacancyException("There is no vacancy!");
+
+
+            foreach (var vacancy in vacancies)
+            {
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine(vacancy);
+            }
+        }
     }
 }

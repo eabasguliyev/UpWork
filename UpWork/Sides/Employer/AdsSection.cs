@@ -219,7 +219,11 @@ namespace UpWork.Sides.Employer
                     }
                     case VacancyUpdateChoices.Category:
                     {
-                        vacancy.Ad.Category = VacancyHelper.InputData("Category");
+                        Console.Clear();
+                        Console.WriteLine("Category:");
+                        ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
+
+                        vacancy.Ad.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
 
                         logger.Info("Category updated");
                         break;
@@ -233,28 +237,44 @@ namespace UpWork.Sides.Employer
                     }
                     case VacancyUpdateChoices.Region:
                     {
-                        vacancy.Ad.Region = VacancyHelper.InputData("Region");
+                        Console.Clear();
+                        Console.WriteLine("Region:");
+                        ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+
+                        vacancy.Ad.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
 
                         logger.Info("Region updated");
-                            break;
+                        break;
                     }
                     case VacancyUpdateChoices.Salary:
                     {
-                        Console.WriteLine("New Salary");
-                        vacancy.Ad.Salary.From = VacancyHelper.InputSalary("From: ");
-                        vacancy.Ad.Salary.To = VacancyHelper.InputSalary("To: ");
+                        Console.Clear();
+                        Console.WriteLine("Salary:");
+                        ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+
+                        vacancy.Ad.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+
+                        logger.Info("Salary updated");
                         break;
                     }
                     case VacancyUpdateChoices.Education:
                     {
-                        vacancy.Ad.Education = VacancyHelper.InputData("Education");
+                        Console.Clear();
+                        Console.WriteLine("Education:");
+                        ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
 
+                        vacancy.Ad.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+                        
                         logger.Info("Education updated");
                         break;
                     }
                     case VacancyUpdateChoices.Experience:
                     {
-                        vacancy.Ad.Experience = VacancyHelper.InputData("Experience");
+                        Console.Clear();
+                        Console.WriteLine("Experience:");
+                        ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+
+                        vacancy.Ad.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
 
                         logger.Info("Experience updated");
                         break;
@@ -334,26 +354,57 @@ namespace UpWork.Sides.Employer
 
             // add initialize
 
-            newVacancy.Ad = new Advert()
-            {
-                Category = VacancyHelper.InputData("Category"),
-                Position = VacancyHelper.InputData("Position"),
-                Region = VacancyHelper.InputData("Region"),
-                Education = VacancyHelper.InputData("Education"),
-                Experience = VacancyHelper.InputData("Experience"),
-                Requirements = VacancyHelper.InputData("Requirements"),
-                JobDescription = VacancyHelper.InputData("JobDescription"),
-                Company = VacancyHelper.InputData("Company"),
-                Contact = VacancyHelper.InputData("Contact"),
-            };
+            newVacancy.Ad = new Advert();
 
-            Console.WriteLine("Salary: ");
+            Console.Clear();
+            Console.WriteLine("Category:");
+            ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
 
-            newVacancy.Ad.Salary = new SalaryRange()
-            {
-                From = VacancyHelper.InputSalary("From:"),
-                To = VacancyHelper.InputSalary("To:"),
-            };
+            newVacancy.Ad.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+
+            Console.Clear();
+            
+            newVacancy.Ad.Position = VacancyHelper.InputData("Position");
+            
+            Console.Clear();
+            Console.WriteLine("Region:");
+            ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+
+            newVacancy.Ad.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+
+            Console.Clear();
+            Console.WriteLine("Education:");
+            ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
+
+            newVacancy.Ad.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+            
+            Console.Clear();
+            Console.WriteLine("Experience:");
+            ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+
+            newVacancy.Ad.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+
+            Console.Clear();
+            
+            newVacancy.Ad.Requirements = VacancyHelper.InputData("Requirements");
+
+            Console.Clear();
+
+            newVacancy.Ad.JobDescription = VacancyHelper.InputData("JobDescription");
+
+            Console.Clear();
+
+            newVacancy.Ad.Company = VacancyHelper.InputData("Company");
+
+            Console.Clear();
+
+            newVacancy.Ad.Contact = VacancyHelper.InputData("Contact");
+
+            Console.Clear();
+            Console.WriteLine("Salary:");
+            ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+
+            newVacancy.Ad.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
             return newVacancy;
         }
     }

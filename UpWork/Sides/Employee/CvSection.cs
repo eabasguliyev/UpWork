@@ -30,7 +30,7 @@ namespace UpWork.Sides.Employee
                 {
                     case CvSectionEnum.Show:
                     {
-                        ExceptionHandle.Handle(worker.ShowAllCv);
+                        ExceptionHandle.Handle(worker.ShowAllCv, false);
                         ConsoleScreen.Clear();
                         break;
                     }
@@ -59,7 +59,7 @@ namespace UpWork.Sides.Employee
                         while (true)
                         {
                             Console.Clear();
-                            if(!ExceptionHandle.Handle(worker.ShowAllCv))
+                            if(!ExceptionHandle.Handle(worker.ShowAllCv, false))
                             {
                                 ConsoleScreen.Clear();
                                 break;
@@ -93,7 +93,7 @@ namespace UpWork.Sides.Employee
                         while (true)
                         {
                             Console.Clear();
-                            if (!ExceptionHandle.Handle(worker.ShowAllCv))
+                            if (!ExceptionHandle.Handle(worker.ShowAllCv, false))
                             {
                                 ConsoleScreen.Clear();
                                 break;
@@ -128,13 +128,50 @@ namespace UpWork.Sides.Employee
 
         private static Cv CreateNewCv()
         {
-            var newCw = new Cv()
-            {
-                Speciality = CvHelper.InputData("Speciality"),
-                School = CvHelper.InputData("School"),
-                UniScore = CvHelper.InputUniScore(),
-                HonorsDiploma = CvHelper.InputHonorsDiplomaStatus()
-            };
+            var newCv = new Cv();
+
+            /*
+             *  sb.Append($"Category: {Category}\n");
+            sb.Append($"Education: {Education}\n");
+            sb.Append($"Experience: {Experience}\n");
+            sb.Append($"Region: {Region}\n");
+            sb.Append($"Salary: {Salary}\n");
+
+             */
+
+            Console.Clear();
+            Console.WriteLine("Category:");
+            ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
+
+            newCv.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+
+            Console.Clear();
+            Console.WriteLine("Region:");
+            ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+
+            newCv.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+
+
+            Console.Clear();
+            Console.WriteLine("Salary:");
+            ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+
+            newCv.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+
+            Console.Clear();
+            Console.WriteLine("Education:");
+            ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
+
+            newCv.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+
+            Console.Clear();
+            Console.WriteLine("Experience:");
+            ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+
+            newCv.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+
+
+            newCv.HonorsDiploma = CvHelper.InputHonorsDiplomaStatus();
 
             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add skill?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -142,7 +179,7 @@ namespace UpWork.Sides.Employee
                 Console.WriteLine("Add skill: ");
                 while (true)
                 {
-                    newCw.Skills.Add(new Skill()
+                    newCv.Skills.Add(new Skill()
                     {
                         Name = CvHelper.InputData("Skill"),
                         Level = CvHelper.InputSkillLevel()
@@ -161,7 +198,7 @@ namespace UpWork.Sides.Employee
                 Console.WriteLine("Add workplaces: ");
                 while (true)
                 {
-                    newCw.WorkPlaces.Add(new WorkPlace()
+                    newCv.WorkPlaces.Add(new WorkPlace()
                     {
                         Company = CvHelper.InputData("Company"),
                         Timeline = new Timeline()
@@ -177,21 +214,6 @@ namespace UpWork.Sides.Employee
                 }
             }
 
-
-            if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add general timeline?",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-            {
-                Console.WriteLine("Add general timeline: ");
-                newCw.Timeline = new Timeline()
-                {
-                    Start = CvHelper.InputDateTime("Start"),
-                    End = CvHelper.InputDateTime("End"),
-                };
-            }
-
-
-
-
             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add language?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
@@ -199,7 +221,7 @@ namespace UpWork.Sides.Employee
 
                 while (true)
                 {
-                    newCw.Languages.Add(new Language()
+                    newCv.Languages.Add(new Language()
                     {
                         Name = CvHelper.InputData("Name"),
                         Level = CvHelper.InputSkillLevel(),
@@ -218,7 +240,7 @@ namespace UpWork.Sides.Employee
 
                 while (true)
                 {
-                    newCw.Socials.Add(new Social()
+                    newCv.Socials.Add(new Social()
                     {
                         Name = CvHelper.InputData("Name"),
                         Link = CvHelper.InputLink()
@@ -230,7 +252,7 @@ namespace UpWork.Sides.Employee
                 }
             }
 
-            return newCw;
+            return newCv;
         }
         private static void CvUpdateSideStart(Cv cv)
         {
@@ -249,29 +271,64 @@ namespace UpWork.Sides.Employee
                 var updateChoice =
                     (CvUpdateChoices)ConsoleScreen.Input(ConsoleScreen.CvUpdateMenu.Count);
 
+                //Category, Region, Salary, Education, Experience, WorkPlaces, Skills, Languages, HonorsDiploma, Socials, Back
+                //
                 switch (updateChoice)
                 {
-                    case CvUpdateChoices.Speciality:
-                        {
-                            cv.Speciality = CvHelper.InputData("Speciality");
+                    case CvUpdateChoices.Category:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Category:");
+                        ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
 
-                            logger.Info("Speciality updated!");
-                            break;
-                        }
-                    case CvUpdateChoices.School:
-                        {
-                            cv.School = CvHelper.InputData("School");
+                        cv.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
 
-                            logger.Info("School updated");
-                            break;
-                        }
-                    case CvUpdateChoices.UniScore:
-                        {
-                            cv.UniScore = CvHelper.InputUniScore();
+                        logger.Info("Category updated!");
+                        break;
+                    }
+                    case CvUpdateChoices.Region:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Region:");
+                        ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
 
-                            logger.Info("Uni score updated!");
-                            break;
-                        }
+                        cv.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+                        logger.Info("Region updated!");
+
+                        break;
+                    }
+                    case CvUpdateChoices.Salary:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Salary:");
+                        ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+
+                        cv.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+                        logger.Info("Salary updated!");
+                        break;
+                    }
+                    case CvUpdateChoices.Education:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Education:");
+                        ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
+
+                        cv.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+
+                        logger.Info("Education updated");
+                        break;
+                    }
+                    case CvUpdateChoices.Experience:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Experience:");
+                        ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+
+                        cv.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+
+                        logger.Info("Experience updated!");
+                        break;
+                    }
                     case CvUpdateChoices.WorkPlaces:
                         {
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add workplace or delete?",
@@ -324,18 +381,7 @@ namespace UpWork.Sides.Employee
                                 }
                             }
                             break;
-                        }
-                    case CvUpdateChoices.Timeline:
-                        {
-                            var newTimeLine = new Timeline()
-                            {
-                                Start = CvHelper.InputDateTime("Start: "),
-                                End = CvHelper.InputDateTime("End: "),
-                            };
-                            cv.Timeline = newTimeLine;
-                            logger.Info("Timeline updated!");
-                            break;
-                        }
+                    }   
                     case CvUpdateChoices.Skills:
                         {
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add skill or delete?",

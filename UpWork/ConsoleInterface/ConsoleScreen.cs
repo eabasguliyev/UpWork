@@ -17,23 +17,27 @@ namespace UpWork.ConsoleInterface
         public static IList<string> AdsSectionMenu { get; }
         public static IList<string> VacancyUpdateMenu { get; }
 
+        public static IList<string> CvAdsChoices { get; }
+
         static ConsoleScreen()
         {
             UserAccess = new List<string>() {"Login", "Register", "Exit"};
             UserType = new List<string>() {"Worker", "Employer"};
-            WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Logout"};
+            WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Cv Notifications", "See Notifications", "Logout"};
             CvSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             SkillLevels = new List<string>() {"Beginner", "Intermediate", "Advanced"};
             CvUpdateMenu = new List<string>()
-                {"Speciality", "School", "UniScore", "WorkPlaces", "Timeline", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
+                {"Category", "Region", "Salary", "Education", "Experience", "WorkPlaces", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
 
-            EmployerSideMainMenu = new List<string>() {"Your ads", "See workers", "See notifications", "Logout"};
+            EmployerSideMainMenu = new List<string>() {"Your ads", "See workers", "Ads Notifications", "See notifications", "Logout"};
             AdsSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             VacancyUpdateMenu = new List<string>()
             {
                 "Mail", "Phones", "Category", "Position", "Region", "Salary", "Education",
                 "Experience", "Requirements", "Job Description", "Company", "Contact", "Back"
             };
+
+            CvAdsChoices = new List<string>() {"Accept", "Decline", "Back"};
         }
 
         public static int Input(int length)

@@ -5,6 +5,7 @@ using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
+using UpWork.NotificationSender;
 using UpWork.Sides;
 using UpWork.Sides.UserAccess;
 
@@ -14,7 +15,14 @@ namespace UpWork
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(Data.Data.Categories.Count);
+
+            Console.Clear();
             var db = new Database.Database();
+            
+
+            Publisher.EventHandler += MailNotification.Send;
+            Publisher.EventHandler += ProgramNotification.Send;
 
             db.Users.Add(new Worker()
             {
@@ -30,12 +38,13 @@ namespace UpWork
 
             (db.Users[0] as Worker).Cvs.Add(new Cv()
             {
-                Speciality = "Programmer",
-                School = "233",
+                Category = Data.Data.Categories[0],
+                Education = Data.Data.Educations[2],
+                Experience = Data.Data.Experiences[1],
+                Salary = Data.Data.Salaries[2],
                 HonorsDiploma = false,
                 Languages = new List<Language>() { new Language() { Name = "English", Level = SkillLevelEnum.Intermediate} },
                 Skills = new List<Skill>() { new Skill() { Name = "c++", Level = SkillLevelEnum.Intermediate} },
-                UniScore = 450
             });
 
             db.Users.Add(new Employer()
@@ -64,7 +73,7 @@ namespace UpWork
                     Position = "Manager",
                     Region = "Baku",
                     Requirements = "allah verenden",
-                    Salary = new SalaryRange() { From = 200, To = 300},
+                    Salary = Data.Data.Salaries[2]
                 }
             });
 
@@ -82,7 +91,7 @@ namespace UpWork
                     Position = "C# Developer",
                     Region = "Baku",
                     Requirements = "allah verenden",
-                    Salary = new SalaryRange() { From = 400, To = 600 },
+                    Salary = Data.Data.Salaries[4],
                 }
             });
 

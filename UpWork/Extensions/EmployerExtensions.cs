@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UpWork.Entities;
 using UpWork.Exceptions;
+using UpWork.Sides.Employee;
 
 namespace UpWork.Extensions
 {
@@ -16,6 +18,18 @@ namespace UpWork.Extensions
             {
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine(vacancy);
+            }
+        }
+
+        public static void ShowAllAdsWithRequestCount(this Employer employer)
+        {
+            if (employer.Vacancies.Count == 0)
+                throw new AdException("There is no Vacancies!");
+
+            foreach (var vacancy in employer.Vacancies)
+            {
+                Console.WriteLine("--------------------------------------");
+                vacancy.ShowVacancyWithRequestCount();
             }
         }
 

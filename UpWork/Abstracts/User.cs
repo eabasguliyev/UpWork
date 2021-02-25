@@ -1,4 +1,7 @@
-﻿namespace UpWork.Abstracts
+﻿using System.Collections.Generic;
+using UpWork.Entities;
+
+namespace UpWork.Abstracts
 {
     public abstract class User:Id
     {
@@ -21,5 +24,12 @@
         public string City { get; set; }
         public string Phone { get; set; }
         public int Age  { get; set; }
+
+        public List<Notification> Notifications { get; set; }
+
+        protected User()
+        {
+            Notifications = new List<Notification>();
+        }
     }
 }

@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UpWork.ConsoleInterface;
+using UpWork.Entities;
 using UpWork.Enums;
+using UpWork.Exceptions;
+using UpWork.Interfaces;
 using UpWork.Logger;
 
 namespace UpWork.Helpers
@@ -66,6 +71,17 @@ namespace UpWork.Helpers
                 if(ExceptionHandle.Handle(UserHelper.ValidateLink, link))
                     return link;
             }
+        }
+
+
+        public static Cv GetCv(Guid cvId, IList<ICv> cvs)
+        {
+            var cv = cvs.SingleOrDefault(c => ((Cv)c).Guid == cvId);
+
+            if (cv == null)
+                throw new CvException($"There is no cv associated this guid -> {cvId}");
+
+            return (Cv)cv;
         }
     }
 }

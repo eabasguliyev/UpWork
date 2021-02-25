@@ -9,11 +9,10 @@ namespace UpWork.Entities
         public Contact Contact { get; set; }
         public Advert Ad { get; set; }
 
-        public IList<Guid> RequestsFromWorkers { get; set; }
-
+        public Dictionary<Guid, Guid> RequestsFromWorkers { get; set; }
         public Vacancy()
         {
-            RequestsFromWorkers = new List<Guid>();
+            RequestsFromWorkers = new Dictionary<Guid, Guid>();
         }
         public override string ToString()
         {
@@ -22,6 +21,12 @@ Contact:
 {Contact}
 Ad:
 {Ad}";
+        }
+
+        public void ShowVacancyWithRequestCount()
+        {
+            Console.WriteLine(this);
+            Console.WriteLine($"Request count: {RequestsFromWorkers.Count}");
         }
     }
 }

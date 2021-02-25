@@ -10,15 +10,37 @@ namespace UpWork.Extensions
 {
     public static class WorkerExtensions
     {
-        public static void ShowAllCv(this Worker worker)
+        public static void ShowAllCv(this Worker worker, bool onlyPublic = false)
         {
             if (worker.Cvs.Count == 0)
                 throw new CvException("There is no cv!");
 
-            foreach (var cv in worker.Cvs)
+            
+            if (onlyPublic)
             {
-                Console.WriteLine("--------------------------------------");
-                Console.WriteLine(cv);
+                var flag = false;
+
+                foreach (var ICv in worker.Cvs)
+                {
+                    if (ICv is Cv cv && cv.IsPublic)
+                    {
+                        Console.WriteLine("--------------------------------------");
+
+                        Console.WriteLine(cv);
+                        flag = true;
+                    }
+                }
+
+                if (!flag)
+                    throw new CvException("There is no Cv!");
+            }
+            else
+            {
+                foreach (var cv in worker.Cvs)
+                {
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine(cv);
+                }
             }
         }
 
@@ -43,21 +65,16 @@ namespace UpWork.Extensions
             return cv;
         }
 
-        public static void SeeAds(this Worker worker, IList<Vacancy> vacancies)
+        public static void ShowShortNotfInfo(this Worker worker)
         {
-            if (vacancies == null)
-                throw new ArgumentNullException(nameof(vacancies));
+            if (worker.Notifications.Count == 0)
+                throw new NotificationException("There is no notification!");
 
-            if (vacancies.Count == 0)
-                throw new VacancyException("There is no vacancy!");
-
-
-            foreach (var vacancy in vacancies)
+            foreach (var notification in worker.Notifications)
             {
-                Console.WriteLine("------------------------------------");
-                Console.WriteLine(vacancy);
+                Console.WriteLine($"Guid: {notification.Guid}");
+                Console.WriteLine($"Title: {notification.Title}");
             }
         }
-
     }
 }

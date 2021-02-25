@@ -43,5 +43,42 @@ namespace UpWork.Extensions
 
             return vacancies;
         }
+
+        public static IList<Worker> GetWorkers(this Database.Database database)
+        {
+            var flag = false;
+
+            var workers = new List<Worker>();
+
+            foreach (var user in database.Users)
+            {
+                if (user is Worker worker)
+                {
+                    workers.Add(worker);
+                    flag = true;
+                }
+            }
+
+            if (!flag)
+                throw new CvException("There is no worker!");
+
+            return workers;
+        }
+
+        public static List<Cv> GetAllCvFromRequests(this Database.Database database, Dictionary<Guid, Guid> requests)
+        {
+            var cvs = new List<Cv>();
+
+            foreach (var item in requests)
+            {
+                if (database.Users.SingleOrDefault(u => u.Guid == item.Key) is Worker worker)
+                {
+                    if(worker.Cvs.SingleOrDefault(c => ((Cv)c).Guid == item.Value) is Cv cv)
+                        cvs.Add(cv);
+                }
+            }
+
+            return cvs;
+        }
     }
 }

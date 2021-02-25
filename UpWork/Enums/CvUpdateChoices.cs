@@ -2,6 +2,6 @@
 {
     public enum CvUpdateChoices
     {
-        Speciality = 1, School, UniScore, WorkPlaces, Timeline, Skills, Languages, HonorsDiploma, Socials, Back
+        Category = 1, Region, Salary, Education, Experience, WorkPlaces, Skills, Languages, HonorsDiploma, Socials, Back
     }
 }

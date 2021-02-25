@@ -2,6 +2,6 @@
 {
     public enum WorkerSideMainMenu
     {
-        SEEADS = 1, YOURCV, Logout
+        SEEADS = 1, YOURCV, CvNotifications, SeeNotifications, Logout
     }
 }
