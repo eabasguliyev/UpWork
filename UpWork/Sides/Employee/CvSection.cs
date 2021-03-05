@@ -133,14 +133,18 @@ namespace UpWork.Sides.Employee
             var logger = new ConsoleLogger();
             var newCv = new Cv();
 
+
+            newCv.Name = CvHelper.InputData("Name");
+            newCv.Surname = CvHelper.InputData("Surname: ");
+
             newCv.Category = UserHelper.InputCategory();
 
 
             newCv.Region = UserHelper.InputRegion();
 
-
-
-            newCv.Salary = Convert.ToInt32(UserHelper.InputSalary());
+            Console.Clear();
+            Console.WriteLine("Salary: ");
+            newCv.Salary = UserHelper.GetNumeric(NumericTypes.INT);
 
 
             newCv.Education = UserHelper.InputEducation();
@@ -276,6 +280,22 @@ namespace UpWork.Sides.Employee
                         logger.Info($"Visibility changed to {(cv.IsPublic ? "Public":"Private")}");
                         break;
                     }
+                    case CvUpdateChoices.Name:
+                    {
+                        Console.Clear();
+
+                        cv.Name = CvHelper.InputData("Name");
+                        logger.Info("Name updated!");
+                        break;
+                    }
+                    case CvUpdateChoices.Surname:
+                    {
+                        Console.Clear();
+
+                        cv.Surname = CvHelper.InputData("Surname");
+                        logger.Info("Surname updated!");
+                        break;
+                        }
                     case CvUpdateChoices.Category:
                     {
                         cv.Category = UserHelper.InputCategory();
@@ -291,7 +311,9 @@ namespace UpWork.Sides.Employee
                     }
                     case CvUpdateChoices.Salary:
                     {
-                        cv.Salary = Convert.ToInt32(UserHelper.InputSalary());
+                        Console.Clear();
+                        Console.WriteLine("Salary: ");
+                        cv.Salary = UserHelper.GetNumeric(NumericTypes.INT);
                         logger.Info("Salary updated!");
                             break;
                     }

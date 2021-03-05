@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UpWork.Abstracts;
 using UpWork.Exceptions;
+using UpWork.Helpers;
+using UpWork.Network;
 
 namespace UpWork.UserAccess
 {
     public static class UserAccess
     {
+        public static string ConfirmationCode { get; set; }
+        
+        public static void SendConfirmationCode(in string mail)
+        {
+            ConfirmationCode = UserHelper.GenerateCode();
+            Mail.SendMail(mail, "There is last step to do.", $"Confirmation code is {ConfirmationCode}");
+        }
+
         public static User Login(Credentials credentials, IList<User> users)
         {
             if (users == null)

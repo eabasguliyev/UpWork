@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using UpWork.ConsoleInterface;
+using UpWork.Entities;
 using UpWork.Enums;
 using UpWork.Exceptions;
 using UpWork.Logger;
@@ -72,6 +74,13 @@ namespace UpWork.Helpers
                 }
             }
 
+        }
+
+        public static string GenerateCode()
+        {
+            var random = new Random();
+
+            return random.Next(1000, 9999).ToString();
         }
 
         public static void ValidateMail(string mail)
@@ -159,10 +168,39 @@ namespace UpWork.Helpers
         public static string InputSalary()
         {
             Console.Clear();
-            Console.WriteLine("Salary:");
+            Console.WriteLine("Salary: ");
             ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
 
             return Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+        }
+
+        public static SalaryRange InputSalaryRange()
+        {
+            var salaryRange = new SalaryRange();
+
+            Console.WriteLine("Salary range:");
+
+            Console.WriteLine("From: ");
+            salaryRange.From = GetNumeric(NumericTypes.INT);
+
+            while (true)
+            {
+                Console.WriteLine("To: ");
+                salaryRange.To = GetNumeric(NumericTypes.INT);
+
+                if (salaryRange.To >= salaryRange.From)
+                    break;
+
+                var logger = new ConsoleLogger();
+                logger.Error("Max salary must be greater than min!");
+            }
+
+            return salaryRange;
+        }
+
+        public static int ParseSalary(string data)
+        {
+            return Convert.ToInt32(Regex.Match(data, @"\d+").Value);
         }
     }
 }

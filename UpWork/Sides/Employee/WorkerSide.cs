@@ -17,12 +17,12 @@ namespace UpWork.Sides.Employee
     {
         public static void Start(Worker worker, Database.Database db)
         {
-            Console.Title = $"Worker: {worker.Name}";
             var logger = new ConsoleLogger();
             var workerSideMainLoop = true;
 
             while (workerSideMainLoop)
             {
+                Console.Title = $"Worker: {worker.Name}";
                 if (Database.Database.Changes)
                 {
                     Data.Data.WriteToJson(db);

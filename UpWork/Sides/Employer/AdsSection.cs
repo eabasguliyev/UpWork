@@ -253,7 +253,7 @@ namespace UpWork.Sides.Employer
                     }
                     case VacancyUpdateChoices.Salary:
                     {
-                        vacancy.Ad.Salary = Convert.ToInt32(UserHelper.InputSalary());
+                        vacancy.Ad.SalaryRange = UserHelper.InputSalaryRange();
 
                         logger.Info("Salary updated");
                         break;
@@ -379,8 +379,7 @@ namespace UpWork.Sides.Employer
 
             newVacancy.Ad.Contact = VacancyHelper.InputData("Contact");
 
-
-            newVacancy.Ad.Salary = Convert.ToInt32(UserHelper.InputSalary());
+            newVacancy.Ad.SalaryRange = UserHelper.InputSalaryRange();
             return newVacancy;
         }
     }

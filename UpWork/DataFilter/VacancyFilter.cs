@@ -28,7 +28,7 @@ namespace UpWork.DataFilter
             if (vacancies.Count == 0)
                 throw new VacancyException("There is no vacancie!");
 
-            return vacancies.Where(v => v.Ad.Salary >= salary).ToList();
+            return vacancies.Where(v => v.Ad.SalaryRange.To >= salary).ToList();
         }
 
         public static IList<Vacancy> FilterByExperience(string experience, IList<Vacancy> vacancies)

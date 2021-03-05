@@ -18,12 +18,13 @@ namespace UpWork.Sides.UserAccess
     {
         public static void Start(Database.Database db)
         {
-            Console.Title = "UpWork";
+            
 
             var userAccessLoop = true;
 
             while (userAccessLoop)
             {
+                Console.Title = "UpWork";
                 ConsoleScreen.PrintMenu(ConsoleScreen.UserAccess, ConsoleColor.DarkGreen);
 
                 var userAccess = (UserAccessEnum)ConsoleScreen.Input(ConsoleScreen.UserAccess.Count);
@@ -54,12 +55,11 @@ namespace UpWork.Sides.UserAccess
         private static void LoginSide(Database.Database db)
         {
             var logger = new ConsoleLogger();
-            
-            Console.Title = $"Login";
 
             var loginLoop = true;
             while (loginLoop)
             {
+                Console.Title = "Login";
                 Console.WriteLine("Username: ");
 
                 var username = UserHelper.GetString("Username can not be empty!");
@@ -110,9 +110,9 @@ namespace UpWork.Sides.UserAccess
         {
             var logger = new ConsoleLogger();
 
-            Console.Title = $"Register";
             while (true)
             {
+                Console.Title = "Register";
                 GetUserData(db, out string name, out string surname, out string mail, out string phone, out string username, out string password, out int age, out string city);
 
                 User newUser = null;
@@ -154,6 +154,20 @@ namespace UpWork.Sides.UserAccess
 
                 try
                 {
+                    UpWork.UserAccess.UserAccess.SendConfirmationCode(newUser.Mail);
+
+                    while (true)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Confirmation code: ");
+
+                        if (UpWork.UserAccess.UserAccess.ConfirmationCode ==
+                            UserHelper.GetNumeric(NumericTypes.INT).ToString())
+                            break;
+
+                        logger.Error("Confirmation code is wrong!");
+                    }
+
                     UpWork.UserAccess.UserAccess.Register(newUser, db.Users);
                     Data.Data.WriteToJson(db);
                     logger.Info("Successfully created account. You can login now.");

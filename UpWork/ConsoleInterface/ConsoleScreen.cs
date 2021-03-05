@@ -28,7 +28,7 @@ namespace UpWork.ConsoleInterface
             CvSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             SkillLevels = new List<string>() {"Beginner", "Intermediate", "Advanced"};
             CvUpdateMenu = new List<string>()
-                {"Change visibility", "Category", "Region", "Salary", "Education", "Experience", "WorkPlaces", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
+                {"Change visibility", "Name", "Surname", "Category", "Region", "Salary", "Education", "Experience", "WorkPlaces", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
 
             EmployerSideMainMenu = new List<string>() {"Your ads", "See Cvs", "Ads Notifications", "See notifications", "Logout"};
             AdsSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};

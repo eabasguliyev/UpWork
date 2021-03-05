@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Exceptions;
 using UpWork.Logger;
@@ -118,22 +119,38 @@ namespace UpWork.Data
             List<Employer> employers = null;
             var serializer = new JsonSerializer();
 
-            using (var sr = new StreamReader(@"Data\Workers.json", Encoding.UTF8))
+            try
             {
-                using (var jr = new JsonTextReader(sr))
+                using (var sr = new StreamReader(@"Data\Workers.json", Encoding.UTF8))
                 {
-                    workers = serializer.Deserialize<List<Worker>>(jr);
+                    using (var jr = new JsonTextReader(sr))
+                    {
+                        workers = serializer.Deserialize<List<Worker>>(jr);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ConsoleScreen.Clear();
             }
 
             workers?.ForEach(db.Users.Add);
 
-            using (var sr = new StreamReader(@"Data\Employers.json", Encoding.UTF8))
+            try
             {
-                using (var jr = new JsonTextReader(sr))
+                using (var sr = new StreamReader(@"Data\Employers.json", Encoding.UTF8))
                 {
-                    employers = serializer.Deserialize<List<Employer>>(jr);
+                    using (var jr = new JsonTextReader(sr))
+                    {
+                        employers = serializer.Deserialize<List<Employer>>(jr);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ConsoleScreen.Clear();
             }
 
             employers?.ForEach(db.Users.Add);

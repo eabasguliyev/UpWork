@@ -164,7 +164,9 @@ namespace UpWork.Sides.Employer
                     {
                         Console.Clear();
 
-                        cvs = CvFilter.FilterBySalary(Convert.ToInt32(UserHelper.InputSalary()), cvs);
+                        var input = UserHelper.InputSalary();
+                        var salary = input == "Any" ? 0 : UserHelper.ParseSalary(input);
+                        cvs = CvFilter.FilterBySalary(salary, cvs);
                         break;
                     }
                     case FilterMenuEnum.Reset:

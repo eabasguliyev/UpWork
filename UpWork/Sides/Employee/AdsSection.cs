@@ -154,8 +154,10 @@ namespace UpWork.Sides.Employee
                     case FilterMenuEnum.BySalary:
                     {
                         Console.Clear();
-
-                        vacancies = VacancyFilter.FilterBySalary(Convert.ToInt32(UserHelper.InputSalary()), vacancies);
+                        var input = UserHelper.InputSalary();
+                        var salary = input == "Any" ? 0 : UserHelper.ParseSalary(input);
+                        
+                        vacancies = VacancyFilter.FilterBySalary(salary, vacancies);
                         break;
                     }
                     case FilterMenuEnum.Reset:

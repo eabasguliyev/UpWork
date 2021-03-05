@@ -17,14 +17,15 @@ namespace UpWork.Sides.Employer
     {
         public static void Start(Entities.Employer employer, Database.Database db)
         {
-            Console.Title = $"Employer: {employer.Name}";
 
             var logger = new ConsoleLogger();
             var employerSideMainLoop = true;
 
             while (employerSideMainLoop)
             {
-                if(Database.Database.Changes)
+                Console.Title = $"Employer: {employer.Name}";
+
+                if (Database.Database.Changes)
                 {
                     Data.Data.WriteToJson(db);
                     Database.Database.Changes = false;

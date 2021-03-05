@@ -44,6 +44,8 @@ namespace UpWork.Entities
         public string GetCvData()
         {
             var sb = new StringBuilder();
+            sb.Append($"Name: {Name}\n");
+            sb.Append($"Surname: {Surname}\n");
             sb.Append($"Category: {Category}\n");
             sb.Append($"Education: {Education}\n");
             sb.Append($"Experience: {Experience}\n");
