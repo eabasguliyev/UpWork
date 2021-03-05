@@ -22,7 +22,6 @@ namespace UpWork
             
 
             Data.Data.ReadFromJson(ref db);
-            //Data.Data.WriteToJson(db);
 
             UserAccessSide.Start(db);
 

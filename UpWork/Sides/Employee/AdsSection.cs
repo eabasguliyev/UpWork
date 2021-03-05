@@ -155,7 +155,7 @@ namespace UpWork.Sides.Employee
                     {
                         Console.Clear();
                         var input = UserHelper.InputSalary();
-                        var salary = input == "Any" ? 0 : UserHelper.ParseSalary(input);
+                        var salary = UserHelper.ParseSalary(input);
                         
                         vacancies = VacancyFilter.FilterBySalary(salary, vacancies);
                         break;
