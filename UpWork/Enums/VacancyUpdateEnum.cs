@@ -2,6 +2,6 @@
 {
     public enum VacancyUpdateChoices
     {
-        Mail = 1, Phones, Category, Position, Region, Salary, Education, Experience, Requirements, JobDescription, Company, Contact, Back
+        ChangeVisibility = 1, Mail, Phones, Category, Position, Region, Salary, Education, Experience, Requirements, JobDescription, Company, Contact, Back
     }
 }

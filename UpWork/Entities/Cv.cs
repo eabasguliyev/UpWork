@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UpWork.Abstracts;
+using UpWork.Exceptions;
 using UpWork.Interfaces;
 
 namespace UpWork.Entities
 {
-    public class Cv:Id, ICv
+    public class Cv:Id
     {
-        private bool _isPublic = true;
-
-        public bool IsPublic => _isPublic;
+        public bool IsPublic { get; set; } = true;
+        public string Name { get; set; }
+        public string Surname { get; set; }
         public string Category { get; set; }
         public string Education { get; set; }
         public string Experience { get; set; }
         public string Region { get; set; }
-        public string Salary { get; set; }
+        public int Salary { get; set; }
         public IList<Skill> Skills { get; set; }
         public IList<WorkPlace> WorkPlaces { get; set; }
         public IList<Language> Languages { get; set; }
         public bool HonorsDiploma { get; set; }
         public IList<Social> Socials { get; set; }
+        public int Views { get; set; }
+        public Dictionary<Guid, Guid> RequestFromEmployers { get; }
 
-        public IList<Guid> RequestsFromEmployers { get; }
         public override string ToString()
         {
             return $@"{base.ToString()}
@@ -35,7 +38,7 @@ namespace UpWork.Entities
             WorkPlaces = new List<WorkPlace>();
             Languages = new List<Language>();
             Socials = new List<Social>();
-            RequestsFromEmployers = new List<Guid>();
+            RequestFromEmployers = new Dictionary<Guid, Guid>();
         }
 
         public string GetCvData()
@@ -93,7 +96,80 @@ namespace UpWork.Entities
                 }
             }
 
+            sb.Append($"\nView(s): {Views}\n");
             return sb.ToString();
+        }
+
+        public void ShowCvWithRequestCount()
+        {
+            Console.WriteLine(this);
+            Console.WriteLine($"Request count: {RequestFromEmployers.Count}");
+        }
+
+        public void DeleteWorkplace(Guid guid)
+        {
+            var workplace = WorkPlaces.SingleOrDefault(w => w.Guid == guid);
+
+            if (workplace == null)
+                throw new CvException($"There is no workplace associated this id -> {guid}");
+
+            WorkPlaces.Remove(workplace);
+        }
+
+        public void DeleteLanguage(Guid guid)
+        {
+            var language = Languages.SingleOrDefault(l => l.Guid == guid);
+
+            if (language == null)
+                throw new CvException($"There is no language associated this id -> {guid}");
+
+            Languages.Remove(language);
+        }
+
+        public void DeleteSkill(Guid guid)
+        {
+            var skill = Skills.SingleOrDefault(s => s.Guid == guid);
+
+            if (skill == null)
+                throw new CvException($"There is no skill associated this id -> {guid}");
+
+            Skills.Remove(skill);
+        }
+
+        public void DeleteSocial(Guid guid)
+        {
+            var social = Socials.SingleOrDefault(s => s.Guid == guid);
+
+            if (social == null)
+                throw new CvException($"There is no social associated this id -> {guid}");
+
+            Socials.Remove(social);
+        }
+
+        public bool CheckEmployerRequest(Guid employerId)
+        {
+            if (RequestFromEmployers.Count == 0)
+                return false;
+
+            var req = RequestFromEmployers.SingleOrDefault(i => i.Key == employerId);
+
+            return req.Key != Guid.Empty;
+        }
+
+        public void SendRequest(Guid employerId, Guid vacancyId)
+        {
+            RequestFromEmployers.Add(employerId, vacancyId);
+        }
+
+        public void RemoveRequest(Guid employerId)
+        {
+            RequestFromEmployers.Remove(employerId);
+        }
+
+        public static Cv operator ++(Cv cv)
+        {
+            cv.Views++;
+            return cv;
         }
     }
 }

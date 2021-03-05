@@ -2,6 +2,6 @@
 {
     public enum CvUpdateChoices
     {
-        Category = 1, Region, Salary, Education, Experience, WorkPlaces, Skills, Languages, HonorsDiploma, Socials, Back
+        ChangeVisibility = 1, Category, Region, Salary, Education, Experience, WorkPlaces, Skills, Languages, HonorsDiploma, Socials, Back
     }
 }

@@ -7,7 +7,7 @@ namespace UpWork.Entities
         public string Category { get; set; }
         public string Position { get; set; }
         public string Region { get; set; }
-        public string Salary { get; set; }
+        public int Salary { get; set; }
         public string Education { get; set; }
         public string Experience { get; set; }
 

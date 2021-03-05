@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using UpWork.Abstracts;
 using UpWork.Entities;
 using UpWork.Exceptions;
 
@@ -22,14 +23,15 @@ namespace UpWork.Helpers
             }
         }
 
-        public static Worker GetWorker(Guid guid, IList<Worker> workers)
+        public static User GetUser(Guid guid, IList<User> users)
         {
-            var worker = workers.SingleOrDefault(w => w.Guid == guid);
+            var user = users.SingleOrDefault(u => u.Guid == guid);
 
-            if (worker == null)
-                throw new DatabaseException($"There is no worker associated this guid -> {guid}");
+            if (user == null)
+                throw new DatabaseException($"There is no user associated this guid -> {guid}");
 
-            return worker;
+            return user;
         }
+
     }
 }

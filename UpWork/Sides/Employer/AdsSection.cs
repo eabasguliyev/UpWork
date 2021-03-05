@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
-using UpWork.Extensions;
+
 using UpWork.Helpers;
 using UpWork.Logger;
 
@@ -29,7 +30,7 @@ namespace UpWork.Sides.Employer
                 {
                     case AdsSectionEnum.Show:
                     {
-                        ExceptionHandle.Handle(employer.ShowAllAds);
+                        ExceptionHandle.Handle(employer.ShowAllAds, false);
                         ConsoleScreen.Clear();
                         break;
                     }
@@ -40,7 +41,7 @@ namespace UpWork.Sides.Employer
                         while (addCvLoop)
                         {
                             employer.Vacancies.Add(CreateNewVacancy());
-
+                            
                             logger.Info("Vacancy added!");
 
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Vacancy?",
@@ -51,14 +52,15 @@ namespace UpWork.Sides.Employer
 
                             Console.Clear();
                         }
-                        break;
+                        Database.Database.Changes = true;
+                            break;
                     }
                     case AdsSectionEnum.Update:
                     {
                         while (true)
                         {
                             Console.Clear();
-                            if (!ExceptionHandle.Handle(employer.ShowAllAds))
+                            if (!ExceptionHandle.Handle(employer.ShowAllAds, false))
                             {
                                 ConsoleScreen.Clear();
                                 break;
@@ -92,7 +94,7 @@ namespace UpWork.Sides.Employer
                         while (true)
                         {
                             Console.Clear();
-                            if (!ExceptionHandle.Handle(employer.ShowAllAds))
+                            if (!ExceptionHandle.Handle(employer.ShowAllAds, false))
                             {
                                 ConsoleScreen.Clear();
                                 break;
@@ -103,7 +105,8 @@ namespace UpWork.Sides.Employer
                             if (ExceptionHandle.Handle(employer.DeleteVacancy, vacancyId))
                             {
                                 logger.Info("Cv deleted!");
-
+                                Database.Database.Changes = true;
+                                
                                 if (employer.Vacancies.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete another Vacancy?",
                                     MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                                     break;
@@ -129,9 +132,7 @@ namespace UpWork.Sides.Employer
         {
             var logger = new ConsoleLogger();
 
-            var vacancyUpdateLoop = true;
-
-            while (vacancyUpdateLoop)
+            while (true)
             {
                 Console.Clear();
 
@@ -143,8 +144,19 @@ namespace UpWork.Sides.Employer
 
                 var updateChoice = (VacancyUpdateChoices) ConsoleScreen.Input(ConsoleScreen.VacancyUpdateMenu.Count);
 
+                if (updateChoice == VacancyUpdateChoices.Back)
+                {
+                    break;
+                }
+
                 switch (updateChoice)
                 {
+                    case VacancyUpdateChoices.ChangeVisibility:
+                    {
+                        vacancy.IsPublic = !vacancy.IsPublic;
+                        logger.Info($"Visibility changed to {(vacancy.IsPublic ? "Public" : "Private")}");
+                        break;
+                    }
                     case VacancyUpdateChoices.Mail:
                     {
 
@@ -159,7 +171,7 @@ namespace UpWork.Sides.Employer
                         }
 
                         logger.Info("Mail updated!");
-                        break;
+                            break;
                     }
                     case VacancyUpdateChoices.Phones:
                     {
@@ -215,15 +227,12 @@ namespace UpWork.Sides.Employer
                                 }
                             }
                         }
+
                         break;
                     }
                     case VacancyUpdateChoices.Category:
                     {
-                        Console.Clear();
-                        Console.WriteLine("Category:");
-                        ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
-
-                        vacancy.Ad.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+                        vacancy.Ad.Category = UserHelper.InputCategory();
 
                         logger.Info("Category updated");
                         break;
@@ -237,44 +246,28 @@ namespace UpWork.Sides.Employer
                     }
                     case VacancyUpdateChoices.Region:
                     {
-                        Console.Clear();
-                        Console.WriteLine("Region:");
-                        ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
-
-                        vacancy.Ad.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+                        vacancy.Ad.Region = UserHelper.InputRegion();
 
                         logger.Info("Region updated");
                         break;
                     }
                     case VacancyUpdateChoices.Salary:
                     {
-                        Console.Clear();
-                        Console.WriteLine("Salary:");
-                        ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
-
-                        vacancy.Ad.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+                        vacancy.Ad.Salary = Convert.ToInt32(UserHelper.InputSalary());
 
                         logger.Info("Salary updated");
                         break;
                     }
                     case VacancyUpdateChoices.Education:
                     {
-                        Console.Clear();
-                        Console.WriteLine("Education:");
-                        ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
-
-                        vacancy.Ad.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+                        vacancy.Ad.Education = UserHelper.InputEducation();
                         
                         logger.Info("Education updated");
                         break;
                     }
                     case VacancyUpdateChoices.Experience:
                     {
-                        Console.Clear();
-                        Console.WriteLine("Experience:");
-                        ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
-
-                        vacancy.Ad.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+                        vacancy.Ad.Experience = UserHelper.InputExperience();
 
                         logger.Info("Experience updated");
                         break;
@@ -307,12 +300,9 @@ namespace UpWork.Sides.Employer
                         logger.Info("Contact updated");
                         break;
                     }
-                    case VacancyUpdateChoices.Back:
-                    {
-                        vacancyUpdateLoop = false;
-                        break;
-                    }
                 }
+                Database.Database.Changes = true;
+                ConsoleScreen.Clear();
             }
         }
 
@@ -356,33 +346,22 @@ namespace UpWork.Sides.Employer
 
             newVacancy.Ad = new Advert();
 
-            Console.Clear();
-            Console.WriteLine("Category:");
-            ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
 
-            newVacancy.Ad.Category = Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+            newVacancy.Ad.Category = UserHelper.InputCategory();
 
             Console.Clear();
             
             newVacancy.Ad.Position = VacancyHelper.InputData("Position");
             
-            Console.Clear();
-            Console.WriteLine("Region:");
-            ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+            newVacancy.Ad.Region = UserHelper.InputRegion();
 
-            newVacancy.Ad.Region = Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
 
-            Console.Clear();
-            Console.WriteLine("Education:");
-            ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
 
-            newVacancy.Ad.Education = Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
-            
-            Console.Clear();
-            Console.WriteLine("Experience:");
-            ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+            newVacancy.Ad.Education = UserHelper.InputEducation();
 
-            newVacancy.Ad.Experience = Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+
+
+            newVacancy.Ad.Experience = UserHelper.InputExperience();
 
             Console.Clear();
             
@@ -390,7 +369,7 @@ namespace UpWork.Sides.Employer
 
             Console.Clear();
 
-            newVacancy.Ad.JobDescription = VacancyHelper.InputData("JobDescription");
+            newVacancy.Ad.JobDescription = VacancyHelper.InputData("Job Description");
 
             Console.Clear();
 
@@ -400,11 +379,8 @@ namespace UpWork.Sides.Employer
 
             newVacancy.Ad.Contact = VacancyHelper.InputData("Contact");
 
-            Console.Clear();
-            Console.WriteLine("Salary:");
-            ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
 
-            newVacancy.Ad.Salary = Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+            newVacancy.Ad.Salary = Convert.ToInt32(UserHelper.InputSalary());
             return newVacancy;
         }
     }

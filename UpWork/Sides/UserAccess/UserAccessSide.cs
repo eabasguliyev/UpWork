@@ -5,7 +5,7 @@ using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
 using UpWork.Exceptions;
-using UpWork.Extensions;
+
 using UpWork.Helpers;
 using UpWork.Logger;
 using UpWork.Sides.Employee;
@@ -34,13 +34,11 @@ namespace UpWork.Sides.UserAccess
                 {
                     case UserAccessEnum.Login:
                         {
-                            //Console.Title = $"Login as {(userType == UserTypeEnum.Worker ? "Worker" : "Employer")}";
                             LoginSide(db);
                             break;
                         }
                     case UserAccessEnum.Register:
                         {
-                            //Console.Title = $"Register as {(userType == UserTypeEnum.Worker ? "Worker" : "Employer")}";
                             RegisterSide(db);
                             break;
                         }
@@ -157,6 +155,7 @@ namespace UpWork.Sides.UserAccess
                 try
                 {
                     UpWork.UserAccess.UserAccess.Register(newUser, db.Users);
+                    Data.Data.WriteToJson(db);
                     logger.Info("Successfully created account. You can login now.");
                     ConsoleScreen.Clear();
                     break;
@@ -225,8 +224,9 @@ namespace UpWork.Sides.UserAccess
 
             Console.WriteLine("Password: ");
 
-            password = UserHelper.GetString("Password can not be empty!");
+            var hash = new Hash.Hash();
 
+            password = hash.GetHash(UserHelper.GetString("Password can not be empty!"));
 
             Console.WriteLine("City: ");
 

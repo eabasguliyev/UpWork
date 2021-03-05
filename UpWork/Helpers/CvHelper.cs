@@ -12,6 +12,21 @@ namespace UpWork.Helpers
 {
     public static class CvHelper
     {
+        public static void SeeCvs(IList<Cv> cvs)
+        {
+            if (cvs == null)
+                throw new ArgumentNullException(nameof(cvs));
+
+            if (cvs.Count == 0)
+                throw new VacancyException("There is no cv!");
+
+
+            foreach (var cv in cvs)
+            {
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine(cv);
+            }
+        }
         public static string InputData(string dataName)
         {
             Console.WriteLine($"{dataName}: ");
@@ -74,7 +89,7 @@ namespace UpWork.Helpers
         }
 
 
-        public static Cv GetCv(Guid cvId, IList<ICv> cvs)
+        public static Cv GetCv(Guid cvId, IList<Cv> cvs)
         {
             var cv = cvs.SingleOrDefault(c => ((Cv)c).Guid == cvId);
 

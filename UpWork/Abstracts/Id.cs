@@ -4,7 +4,7 @@ namespace UpWork.Abstracts
 {
     public abstract class Id
     {
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
 
         protected Id()
         {

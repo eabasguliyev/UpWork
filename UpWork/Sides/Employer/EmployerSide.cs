@@ -6,11 +6,10 @@ using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
-using UpWork.Extensions;
+
 using UpWork.Helpers;
 using UpWork.Logger;
-using UpWork.NotificationSender;
-using Publisher = System.Security.Policy.Publisher;
+using Publisher = UpWork.NotificationSender.Publisher;
 
 namespace UpWork.Sides.Employer
 {
@@ -18,11 +17,18 @@ namespace UpWork.Sides.Employer
     {
         public static void Start(Entities.Employer employer, Database.Database db)
         {
+            Console.Title = $"Employer: {employer.Name}";
+
             var logger = new ConsoleLogger();
             var employerSideMainLoop = true;
 
             while (employerSideMainLoop)
             {
+                if(Database.Database.Changes)
+                {
+                    Data.Data.WriteToJson(db);
+                    Database.Database.Changes = false;
+                }
                 Console.Clear();
 
                 ConsoleScreen.PrintMenu(ConsoleScreen.EmployerSideMainMenu, ConsoleColor.DarkGreen);
@@ -39,7 +45,7 @@ namespace UpWork.Sides.Employer
                         AdsSection.Start(employer);
                         break;
                     }
-                    case EmployerSideMainMenu.SeeWorkers:
+                    case EmployerSideMainMenu.SeeCvs:
                     {
                         CvSection.Start(employer, db);
                         break;
@@ -81,8 +87,9 @@ namespace UpWork.Sides.Employer
                                             continue;
                                         }
 
-                                        var worker = DatabaseHelper.GetWorker(vacancy.RequestsFromWorkers
-                                            .SingleOrDefault(r => r.Value == cv.Guid).Key, db.GetWorkers());
+                                        var worker = DatabaseHelper.GetUser(vacancy.RequestsFromWorkers
+                                            .SingleOrDefault(r => r.Value == cv.Guid).Key, db.Users) as Worker;
+
 
                                         Console.Clear();
 
@@ -98,38 +105,50 @@ namespace UpWork.Sides.Employer
                                             break;
 
 
-                                        switch (choice)
+                                        try
                                         {
-                                            case CvAdsChoices.Accept:
+                                            switch (choice)
                                             {
-                                                vacancy.RemoveRequest(worker.Guid);
+                                                case CvAdsChoices.Accept:
+                                                {
+                                                    vacancy.RemoveRequest(worker.Guid);
 
-                                                NotificationSender.Publisher.OnSend(worker, new Notification(){Title="Your apply result", Message = $"Congratilations. Your cv accepted.\n Vacancy info:\n{vacancy}"});
-                                                logger.Info("Accepted.");
-                                                break;
-                                            }
-                                            case CvAdsChoices.Decline:
-                                            {
-                                                vacancy.RemoveRequest(worker.Guid);
-                                                NotificationSender.Publisher.OnSend(worker, new Notification() { Title = "Your apply result", Message = $"We are sorry! Your cv declined.\n Vacancy info:\n{vacancy}" });
-                                                logger.Info("Declined.");
-                                                break;
+                                                    Publisher.OnSend(worker, new Notification(){Title="Your apply result", Message = $"Congratilations. Your cv accepted.\n Vacancy info:\n{vacancy}"});
+                                                    logger.Info("Accepted.");
+                                                    break;
+                                                }
+                                                case CvAdsChoices.Decline:
+                                                {
+                                                    vacancy.RemoveRequest(worker.Guid);
+                                                    Publisher.OnSend(worker, new Notification() { Title = "Your apply result", Message = $"We are sorry! Your cv declined.\n Vacancy info:\n{vacancy}" });
+                                                    logger.Info("Declined.");
+                                                    break;
+                                                }
                                             }
                                         }
+                                        catch (Exception e)
+                                        {
+                                            logger.Error(e.Message);
+                                            ConsoleScreen.Clear();
+                                        }
+
+                                        Database.Database.Changes = true;
 
                                         if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to see other Cvs?",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                                            MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No) 
                                             break;
                                     }
                                 }
                                 else
                                 {
                                     logger.Error("There is no request!");
+                                    ConsoleScreen.Clear();
                                 }
                             }
                             catch (Exception e)
                             { 
-                                logger.Error(e.Message);   
+                                logger.Error(e.Message);  
+                                ConsoleScreen.Clear();
                             }
 
                             if (vacancy == null && ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
@@ -141,6 +160,7 @@ namespace UpWork.Sides.Employer
                     }
                     case EmployerSideMainMenu.SeeNotifications:
                     {
+                        NotificationSide.Start(employer);
                         break;
                     }
                     case EmployerSideMainMenu.Logout:

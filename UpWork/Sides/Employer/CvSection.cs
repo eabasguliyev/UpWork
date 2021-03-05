@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using UpWork.ConsoleInterface;
+using UpWork.DataFilter;
 using UpWork.Entities;
-using UpWork.Extensions;
+using UpWork.Enums;
 using UpWork.Helpers;
 
 namespace UpWork.Sides.Employer
@@ -14,37 +16,33 @@ namespace UpWork.Sides.Employer
         {
             var logger = new Logger.ConsoleLogger();
 
-            var seeWorkersLoop = true;
+            var seeCvsLoop = true;
 
-            while (seeWorkersLoop)
+
+            var mainCvs = db.GetCvs();
+
+            IList<Cv> cvs = mainCvs;
+
+
+            while (seeCvsLoop)
             {
-#pragma warning disable CS0219 // The variable 'filterUsed' is assigned but its value is never used
-                var filterUsed = false;
-#pragma warning restore CS0219 // The variable 'filterUsed' is assigned but its value is never used
+                Console.Clear();
 
-                var workers = db.GetWorkers();
+                ExceptionHandle.Handle(CvHelper.SeeCvs, cvs);
 
-                var loop2 = true;
-                while (loop2)
+                ConsoleScreen.PrintMenu(ConsoleScreen.FilterMenu, ConsoleColor.Blue);
+
+                var filterMenuChoice = (FilterMenuEnum)ConsoleScreen.Input(ConsoleScreen.FilterMenu.Count);
+
+                switch (filterMenuChoice)
                 {
-                    Console.Clear();
-                    if (!ExceptionHandle.Handle(DatabaseHelper.ShowWorkers, workers))
-                        break;
-                    try
+                    case FilterMenuEnum.Select:
                     {
-                        Console.WriteLine("Worker id: ");
-
-                        var workerId = UserHelper.InputGuid();
-
-                        var worker = DatabaseHelper.GetWorker(workerId, workers);
-
-                        Console.Clear();
-
                         var loop3 = true;
                         while (loop3)
                         {
                             Console.Clear();
-                            if (!ExceptionHandle.Handle(worker.ShowAllCv, true))
+                            if (!ExceptionHandle.Handle(CvHelper.SeeCvs, cvs))
                                 break;
                             Console.WriteLine("Cv id: ");
 
@@ -52,7 +50,7 @@ namespace UpWork.Sides.Employer
 
                             try
                             {
-                                var cv = CvHelper.GetCv(cvId, worker.Cvs);
+                                var cv = CvHelper.GetCv(cvId, cvs);
 
                                 Console.Clear();
 
@@ -62,7 +60,9 @@ namespace UpWork.Sides.Employer
 
                                     Console.Clear();
 
-                                    Console.WriteLine(cv);
+                                    Console.WriteLine(cv++); // increase view count and print.
+
+                                    Database.Database.Changes = true;
 
                                     Console.WriteLine();
 
@@ -76,11 +76,41 @@ namespace UpWork.Sides.Employer
                                     {
                                         if (requestFromEmployer)
                                         {
-                                            cv.CancelRequest(employer.Guid);
+                                            cv.RemoveRequest(employer.Guid);
                                         }
                                         else
                                         {
-                                            cv.SendRequest(employer.Guid);
+                                            Vacancy vacancy = null;
+
+                                            while (true)
+                                            {
+                                                Console.Clear();
+                                                if (!ExceptionHandle.Handle(employer.ShowAllAds, true))
+                                                {
+                                                    logger.Info("Please add public Vacancy!");
+                                                    ConsoleScreen.Clear();
+                                                    break;
+                                                }
+
+                                                var vacancyId = UserHelper.InputGuid();
+
+
+                                                try
+                                                {
+                                                    vacancy = VacancyHelper.GetVacancy(vacancyId, employer.Vacancies);
+                                                    break;
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    logger.Error(e.Message);
+                                                    ConsoleScreen.Clear();
+                                                }
+                                            }
+
+                                            if (vacancy != null)
+                                            {
+                                                cv.SendRequest(employer.Guid, vacancy.Guid);
+                                            }
                                         }
                                     }
                                     else if (choice == 2)
@@ -99,40 +129,55 @@ namespace UpWork.Sides.Employer
                             {
                                 logger.Error(e.Message);
                             }
-
-                            if (!loop3)
-                            {
-                                if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to see other workers?",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
-                                    loop2 = false;
-                                else
-                                    loop3 = true;
-                                    break;
-                            }
-                            else if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
-                            {
-                                if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to see other workers?",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
-                                    loop2 = false;
-
-                                break;
-                            }
                         }
-
-                        if (loop3)
-                            continue;
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error(e.Message);
-                    }
-
-                    if (!loop2 ||ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                         break;
+                    }
+                    case FilterMenuEnum.ByCategory:
+                    {
+                        Console.Clear();
+
+                        cvs = CvFilter.FilterByCategory(UserHelper.InputCategory(), cvs);
+                        break;
+                    }
+                    case FilterMenuEnum.ByEducation:
+                    {
+                        Console.Clear();
+
+                        cvs = CvFilter.FilterByEducation(UserHelper.InputEducation(), cvs);
+                        break;
+                    }
+                    case FilterMenuEnum.ByExperience:
+                    {
+                        Console.Clear();
+
+                        cvs = CvFilter.FilterByExperience(UserHelper.InputExperience(), cvs);
+                        break;
+                    }
+                    case FilterMenuEnum.ByRegion:
+                    {
+                        Console.Clear();
+
+                        cvs = CvFilter.FilterByRegion(UserHelper.InputRegion(), cvs);
+                        break;
+                    }
+                    case FilterMenuEnum.BySalary:
+                    {
+                        Console.Clear();
+
+                        cvs = CvFilter.FilterBySalary(Convert.ToInt32(UserHelper.InputSalary()), cvs);
+                        break;
+                    }
+                    case FilterMenuEnum.Reset:
+                    {
+                        cvs = mainCvs;
+                        break;
+                    }
+                    case FilterMenuEnum.Back:
+                    {
+                        seeCvsLoop = false;
+                        break;
+                    }
                 }
-                break;
             }
         }
     }

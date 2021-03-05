@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -48,6 +51,8 @@
     <Compile Include="Abstracts\User.cs" />
     <Compile Include="ConsoleInterface\ConsoleScreen.cs" />
     <Compile Include="Database\Database.cs" />
+    <Compile Include="DataFilter\CvFilter.cs" />
+    <Compile Include="DataFilter\VacancyFilter.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Entities\Advert.cs" />
     <Compile Include="Entities\Notification.cs" />
@@ -66,6 +71,7 @@
     <Compile Include="Enums\CvAdsChoices.cs" />
     <Compile Include="Enums\AdsSectionEnum.cs" />
     <Compile Include="Enums\CvSectionEnum.cs" />
+    <Compile Include="Enums\FilterMenuEnum.cs" />
     <Compile Include="Enums\VacancyUpdateEnum.cs" />
     <Compile Include="Enums\CvUpdateChoices.cs" />
     <Compile Include="Enums\EmployerSideMainMenu.cs" />
@@ -85,14 +91,10 @@
     <Compile Include="Exceptions\MailException.cs" />
     <Compile Include="Exceptions\RegisterException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
-    <Compile Include="Extensions\DatabaseExtensions.cs" />
-    <Compile Include="Extensions\CvExtensions.cs" />
-    <Compile Include="Extensions\EmployerExtensions.cs" />
-    <Compile Include="Extensions\VacancyExtensions.cs" />
-    <Compile Include="Extensions\WorkerExtensions.cs" />
     <Compile Include="Hash\Hash.cs" />
     <Compile Include="Helpers\CvHelper.cs" />
     <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\WorkerHelper.cs" />
     <Compile Include="Helpers\EmployerHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\VacancyHelper.cs" />
@@ -100,6 +102,8 @@
     <Compile Include="Interfaces\IHash.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Logger\ConsoleLogger.cs" />
+    <Compile Include="Network\ConfigJson.cs" />
+    <Compile Include="Network\Mail.cs" />
     <Compile Include="NotificationSender\MailNotification.cs" />
     <Compile Include="NotificationSender\ProgramNotification.cs" />
     <Compile Include="NotificationSender\Publisher.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Sides\Employer\AdsSection.cs" />
     <Compile Include="Sides\Employer\CvSection.cs" />
     <Compile Include="Sides\Employer\EmployerSide.cs" />
+    <Compile Include="Sides\NotificationSide.cs" />
     <Compile Include="Sides\UserAccess\UserAccessSide.cs" />
     <Compile Include="Sides\Employee\WorkerSide.cs" />
     <Compile Include="UserAccess\Credentials.cs" />
@@ -117,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

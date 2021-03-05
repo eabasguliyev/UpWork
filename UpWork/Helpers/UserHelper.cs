@@ -1,4 +1,5 @@
 ﻿using System;
+using UpWork.ConsoleInterface;
 using UpWork.Enums;
 using UpWork.Exceptions;
 using UpWork.Logger;
@@ -117,5 +118,51 @@ namespace UpWork.Helpers
             }
         }
 
+
+
+        public static string InputCategory()
+        {
+            Console.Clear();
+            Console.WriteLine("Category:");
+            ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
+
+            return Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+        }
+
+        public static string InputRegion()
+        {
+            Console.Clear();
+            Console.WriteLine("Region:");
+            ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+
+            return Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+        }
+
+        public static string InputEducation()
+        {
+            Console.Clear();
+            Console.WriteLine("Education:");
+            ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
+
+            return Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+        }
+
+        public static string InputExperience()
+        {
+            Console.Clear();
+            Console.WriteLine("Experience:");
+            ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+
+            return Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+        }
+
+        public static string InputSalary()
+        {
+            Console.Clear();
+            Console.WriteLine("Salary:");
+            ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+
+            return Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+        }
     }
 }

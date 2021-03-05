@@ -9,7 +9,6 @@ namespace UpWork.NotificationSender
     {
         public static event NotificationSender EventHandler;
 
-
         public static void OnSend(User user, Notification notification)
         {
             EventHandler?.Invoke(user, notification);

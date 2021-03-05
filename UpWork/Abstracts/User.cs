@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UpWork.Entities;
+using UpWork.Exceptions;
 
 namespace UpWork.Abstracts
 {
@@ -16,8 +18,8 @@ namespace UpWork.Abstracts
             get => _password;
             set
             {
-                var hash = new Hash.Hash();
-                _password = hash.GetHash(value);
+                //var hash = new Hash.Hash();
+                _password = value; //hash.GetHash(value);
             }
         }
 
@@ -30,6 +32,18 @@ namespace UpWork.Abstracts
         protected User()
         {
             Notifications = new List<Notification>();
+        }
+
+        public void ShowShortNotfInfo()
+        {
+            if (Notifications.Count == 0)
+                throw new NotificationException("There is no notification!");
+
+            foreach (var notification in Notifications)
+            {
+                Console.WriteLine($"Guid: {notification.Guid}");
+                Console.WriteLine($"Title: {notification.Title}");
+            }
         }
     }
 }
