@@ -1,4 +1,0 @@
-Less than 1 year
-from 1 to 3 years
-from 3 to 5 years
-More than 5 years

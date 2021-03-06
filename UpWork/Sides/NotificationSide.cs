@@ -43,7 +43,7 @@ namespace UpWork.Sides
 
                 Console.Clear();
                 Console.WriteLine(notification++);
-
+                Database.Database.Changes = true;
                 
                 Console.ReadLine();
 
