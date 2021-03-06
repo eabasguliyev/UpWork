@@ -34,16 +34,37 @@ namespace UpWork.Abstracts
             Notifications = new List<Notification>();
         }
 
-        public void ShowShortNotfInfo()
+        public void ShowShortNotfInfo(bool onlyUnread = false)
         {
             if (Notifications.Count == 0)
                 throw new NotificationException("There is no notification!");
 
-            foreach (var notification in Notifications)
+            var flag = false;
+
+            if (onlyUnread)
             {
-                Console.WriteLine($"Guid: {notification.Guid}");
-                Console.WriteLine($"Title: {notification.Title}");
+                foreach (var notification in Notifications)
+                {
+                    if (!notification.IsRead)
+                    {
+                        Console.WriteLine($"Guid: {notification.Guid}");
+                        Console.WriteLine($"Title: {notification.Title}");
+                        flag = true;
+                    }
+                }
             }
+            else
+            {
+                foreach (var notification in Notifications)
+                {
+                    Console.WriteLine($"Guid: {notification.Guid}");
+                    Console.WriteLine($"Title: {notification.Title}");
+                    flag = true;
+                }
+            }
+
+            if(!flag)
+                throw new NotificationException("There is no notification!");
         }
     }
 }

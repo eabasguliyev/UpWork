@@ -54,7 +54,7 @@ namespace UpWork.Sides.UserAccess
 
         private static void LoginSide(Database.Database db)
         {
-            var logger = new ConsoleLogger();
+            
 
             var loginLoop = true;
             while (loginLoop)
@@ -88,11 +88,11 @@ namespace UpWork.Sides.UserAccess
                 }
                 catch (Exception e) when (e is DatabaseException)
                 {
-                    logger.Error($"There is no user associated this username -> {username}");
+                    LoggerPublisher.OnLogError($"There is no user associated this username -> {username}");
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e.Message);
+                    LoggerPublisher.OnLogError(e.Message);
                 }
 
                 if (ConsoleScreen.DisplayMessageBox("Error", "Do yo want try again?",
@@ -108,7 +108,7 @@ namespace UpWork.Sides.UserAccess
 
         private static void RegisterSide(Database.Database db)
         {
-            var logger = new ConsoleLogger();
+            
 
             while (true)
             {
@@ -165,25 +165,25 @@ namespace UpWork.Sides.UserAccess
                             UserHelper.GetNumeric(NumericTypes.INT).ToString())
                             break;
 
-                        logger.Error("Confirmation code is wrong!");
+                        LoggerPublisher.OnLogError("Confirmation code is wrong!");
                     }
 
                     UpWork.UserAccess.UserAccess.Register(newUser, db.Users);
-                    Data.Data.WriteToJson(db);
-                    logger.Info("Successfully created account. You can login now.");
+                    FileHelper.WriteToJson(db);
+                    LoggerPublisher.OnLogInfo("Successfully created account. You can login now.");
                     ConsoleScreen.Clear();
                     break;
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e.Message);
+                    LoggerPublisher.OnLogError(e.Message);
                     ConsoleScreen.Clear();
                 }
             }
         }
         private static void GetUserData(Database.Database db, out string name, out string surname, out string mail, out string phone, out string username, out string password, out int age, out string city)
         {
-            var logger = new ConsoleLogger();
+            
             Console.WriteLine("Name: ");
 
             name = UserHelper.GetString("Name can not be empty!");
@@ -205,7 +205,7 @@ namespace UpWork.Sides.UserAccess
                     if (db.CheckMail(mail))
                         break;
 
-                    logger.Error($"User exists associated this mail -> {mail}!");
+                    LoggerPublisher.OnLogError($"User exists associated this mail -> {mail}!");
                 }
             }
 
@@ -233,7 +233,7 @@ namespace UpWork.Sides.UserAccess
                 if (db.CheckUsername(username))
                     break;
 
-                logger.Error($"User exists associated this username -> {username} ");
+                LoggerPublisher.OnLogError($"User exists associated this username -> {username} ");
             }
 
             Console.WriteLine("Password: ");

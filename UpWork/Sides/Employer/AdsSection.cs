@@ -14,7 +14,7 @@ namespace UpWork.Sides.Employer
     {
         public static void Start(Entities.Employer employer)
         {
-            var logger = new ConsoleLogger();
+            
             var adsSectionLoop = true;
 
             while (adsSectionLoop)
@@ -41,8 +41,8 @@ namespace UpWork.Sides.Employer
                         while (addCvLoop)
                         {
                             employer.Vacancies.Add(CreateNewVacancy());
-                            
-                            logger.Info("Vacancy added!");
+
+                            LoggerPublisher.OnLogInfo("Vacancy added!");
 
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Vacancy?",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
@@ -80,7 +80,7 @@ namespace UpWork.Sides.Employer
                             }
                             catch (Exception e)
                             {
-                                logger.Error(e.Message);
+                                LoggerPublisher.OnLogError(e.Message);
                             }
 
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
@@ -104,7 +104,7 @@ namespace UpWork.Sides.Employer
 
                             if (ExceptionHandle.Handle(employer.DeleteVacancy, vacancyId))
                             {
-                                logger.Info("Cv deleted!");
+                                LoggerPublisher.OnLogInfo("Cv deleted!");
                                 Database.Database.Changes = true;
                                 
                                 if (employer.Vacancies.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete another Vacancy?",
@@ -130,7 +130,7 @@ namespace UpWork.Sides.Employer
 
         private static void VacancyUpdateSideStart(Vacancy vacancy)
         {
-            var logger = new ConsoleLogger();
+            
 
             while (true)
             {
@@ -154,7 +154,7 @@ namespace UpWork.Sides.Employer
                     case VacancyUpdateChoices.ChangeVisibility:
                     {
                         vacancy.IsPublic = !vacancy.IsPublic;
-                        logger.Info($"Visibility changed to {(vacancy.IsPublic ? "Public" : "Private")}");
+                        LoggerPublisher.OnLogInfo($"Visibility changed to {(vacancy.IsPublic ? "Public" : "Private")}");
                         break;
                     }
                     case VacancyUpdateChoices.Mail:
@@ -170,7 +170,7 @@ namespace UpWork.Sides.Employer
                             }
                         }
 
-                        logger.Info("Mail updated!");
+                        LoggerPublisher.OnLogInfo("Mail updated!");
                             break;
                     }
                     case VacancyUpdateChoices.Phones:
@@ -218,7 +218,7 @@ namespace UpWork.Sides.Employer
 
                                     vacancy.Contact.Phones.RemoveAt(phoneIndex);
 
-                                    logger.Info("Phone number deleted");
+                                    LoggerPublisher.OnLogInfo("Phone number deleted");
 
 
                                     if (vacancy.Contact.Phones.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more phone number?",
@@ -234,70 +234,70 @@ namespace UpWork.Sides.Employer
                     {
                         vacancy.Ad.Category = UserHelper.InputCategory();
 
-                        logger.Info("Category updated");
+                        LoggerPublisher.OnLogInfo("Category updated");
                         break;
                     }
                     case VacancyUpdateChoices.Position:
                     {
                         vacancy.Ad.Position = VacancyHelper.InputData("Position");
 
-                        logger.Info("Position updated");
+                        LoggerPublisher.OnLogInfo("Position updated");
                         break;
                     }
                     case VacancyUpdateChoices.Region:
                     {
                         vacancy.Ad.Region = UserHelper.InputRegion();
 
-                        logger.Info("Region updated");
+                        LoggerPublisher.OnLogInfo("Region updated");
                         break;
                     }
                     case VacancyUpdateChoices.Salary:
                     {
                         vacancy.Ad.SalaryRange = UserHelper.InputSalaryRange();
 
-                        logger.Info("Salary updated");
+                        LoggerPublisher.OnLogInfo("Salary updated");
                         break;
                     }
                     case VacancyUpdateChoices.Education:
                     {
                         vacancy.Ad.Education = UserHelper.InputEducation();
-                        
-                        logger.Info("Education updated");
+
+                        LoggerPublisher.OnLogInfo("Education updated");
                         break;
                     }
                     case VacancyUpdateChoices.Experience:
                     {
                         vacancy.Ad.Experience = UserHelper.InputExperience();
 
-                        logger.Info("Experience updated");
+                        LoggerPublisher.OnLogInfo("Experience updated");
                         break;
                     }
                     case VacancyUpdateChoices.Requirements:
                     {
                         vacancy.Ad.Requirements = VacancyHelper.InputData("Requirements");
 
-                        logger.Info("Requirements updated");
+                        LoggerPublisher.OnLogInfo("Requirements updated");
                         break;
                     }
                     case VacancyUpdateChoices.JobDescription:
                     {
                         vacancy.Ad.JobDescription = VacancyHelper.InputData("Job Description");
 
-                        logger.Info("Job Description updated");
+                        LoggerPublisher.OnLogInfo("Job Description updated");
                         break;
                     }
                     case VacancyUpdateChoices.Company:
                     {
                         vacancy.Ad.Company = VacancyHelper.InputData("Company");
 
-                        logger.Info("Company updated");
+                        LoggerPublisher.OnLogInfo("Company updated");
                         break;
                     }
                     case VacancyUpdateChoices.Contact:
                     {
                         vacancy.Ad.Contact = VacancyHelper.InputData("Contact");
 
-                        logger.Info("Contact updated");
+                        LoggerPublisher.OnLogInfo("Contact updated");
                         break;
                     }
                 }

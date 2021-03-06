@@ -20,7 +20,7 @@ namespace UpWork.Helpers
 
         public static int InputSalary(string message)
         {
-            var logger = new ConsoleLogger();
+            
             Console.WriteLine(message);
 
             while (true)
@@ -29,7 +29,7 @@ namespace UpWork.Helpers
 
                 if (salary < 0)
                 {
-                    logger.Error("Salary must be greater than or equal to zero");
+                    LoggerPublisher.OnLogError("Salary must be greater than or equal to zero");
                     continue;
                 }
 
@@ -57,10 +57,7 @@ namespace UpWork.Helpers
 
         public static void SeeAds(IList<Vacancy> vacancies)
         {
-            if (vacancies == null)
-                throw new ArgumentNullException(nameof(vacancies));
-
-            if (vacancies.Count == 0)
+            if (vacancies == null || vacancies.Count == 0)
                 throw new VacancyException("There is no vacancy!");
 
 

@@ -53,7 +53,7 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="DataFilter\CvFilter.cs" />
     <Compile Include="DataFilter\VacancyFilter.cs" />
-    <Compile Include="Data\Data.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Entities\Advert.cs" />
     <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\SkillBase.cs" />
@@ -102,11 +102,13 @@
     <Compile Include="Interfaces\IHash.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Logger\ConsoleLogger.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\LoggerPublisher.cs" />
     <Compile Include="Network\ConfigJson.cs" />
     <Compile Include="Network\Mail.cs" />
     <Compile Include="NotificationSender\MailNotification.cs" />
     <Compile Include="NotificationSender\ProgramNotification.cs" />
-    <Compile Include="NotificationSender\Publisher.cs" />
+    <Compile Include="NotificationSender\NotificationPublisher.cs" />
     <Compile Include="Sides\Employee\AdsSection.cs" />
     <Compile Include="Sides\Employee\CvSection.cs" />
     <Compile Include="Sides\Employer\AdsSection.cs" />

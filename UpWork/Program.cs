@@ -5,6 +5,8 @@ using UpWork.Abstracts;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
 using UpWork.Enums;
+using UpWork.Helpers;
+using UpWork.Logger;
 using UpWork.NotificationSender;
 using UpWork.Sides;
 using UpWork.Sides.UserAccess;
@@ -17,14 +19,21 @@ namespace UpWork
         {
             var db = new Database.Database();
             
-            Publisher.EventHandler += MailNotification.Send;
-            Publisher.EventHandler += ProgramNotification.Send;
-            
+            NotificationPublisher.EventHandler += MailNotification.Send;
+            NotificationPublisher.EventHandler += ProgramNotification.Send;
 
-            Data.Data.ReadFromJson(ref db);
+            var consoleLogger = new ConsoleLogger();
+            var fileLogger = new FileLogger();
+
+            LoggerPublisher.ErrorHandler += consoleLogger.Error;
+            LoggerPublisher.ErrorHandler += fileLogger.Error;
+
+            LoggerPublisher.InfoHandler += consoleLogger.Info;
+            LoggerPublisher.InfoHandler += fileLogger.Info;
+
+            FileHelper.ReadFromJson(ref db);
 
             UserAccessSide.Start(db);
-
         }
     }
 }

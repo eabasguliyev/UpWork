@@ -17,7 +17,7 @@ namespace UpWork.Sides.Employee
     {
         public static void Start(Worker worker, Database.Database db)
         {
-            var logger = new ConsoleLogger();
+            
             var workerSideMainLoop = true;
 
             while (workerSideMainLoop)
@@ -25,7 +25,7 @@ namespace UpWork.Sides.Employee
                 Console.Title = $"Worker: {worker.Name}";
                 if (Database.Database.Changes)
                 {
-                    Data.Data.WriteToJson(db);
+                    FileHelper.WriteToJson(db);
                     Database.Database.Changes = false;
                 }
 
@@ -68,7 +68,7 @@ namespace UpWork.Sides.Employee
 
                                 if (cv.RequestFromEmployers.Count == 0)
                                 {
-                                    logger.Error("There is no request!");
+                                    LoggerPublisher.OnLogError("There is no request!");
                                     ConsoleScreen.Clear();
                                 }
 
@@ -87,7 +87,7 @@ namespace UpWork.Sides.Employee
 
                                     if (vacancy == null)
                                     {
-                                        logger.Error($"There is no vacancy associated this id -> {vacancyId}");
+                                        LoggerPublisher.OnLogError($"There is no vacancy associated this id -> {vacancyId}");
                                         ConsoleScreen.Clear();
                                         continue;
                                     }
@@ -118,15 +118,15 @@ namespace UpWork.Sides.Employee
                                             {
                                                 cv.RemoveRequest(employer.Guid);
 
-                                                NotificationSender.Publisher.OnSend(employer, new Notification() { Title = "From worker", Message = $"Congratilations. Your request accepted.\n Cv info:\n{cv}" });
-                                                logger.Info("Accepted.");
+                                                NotificationSender.NotificationPublisher.OnSend(employer, new Notification() { Title = "From worker", Message = $"Congratilations. Your request accepted.\n Cv info:\n{cv}" });
+                                                LoggerPublisher.OnLogInfo("Accepted.");
                                                 break;
                                             }
                                         case CvAdsChoices.Decline:
                                             {
                                                 cv.RemoveRequest(employer.Guid);
-                                                NotificationSender.Publisher.OnSend(employer, new Notification() { Title = "From worker", Message = $"We are sorry! Your request declined.\n Cv info:\n{cv}" });
-                                                logger.Info("Declined.");
+                                                NotificationSender.NotificationPublisher.OnSend(employer, new Notification() { Title = "From worker", Message = $"We are sorry! Your request declined.\n Cv info:\n{cv}" });
+                                                LoggerPublisher.OnLogInfo("Declined.");
                                                 break;
                                             }
                                     }
@@ -139,7 +139,7 @@ namespace UpWork.Sides.Employee
                             }
                             catch (Exception e)
                             {
-                                logger.Error(e.Message);
+                                LoggerPublisher.OnLogError(e.Message);
                             }
 
                             if (cv == null && ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
@@ -148,9 +148,14 @@ namespace UpWork.Sides.Employee
                         }
                         break;
                     }
-                    case WorkerSideMainMenu.SeeNotifications:
+                    case WorkerSideMainMenu.AllNotifications:
                     {
-                        NotificationSide.Start(worker);
+                        NotificationSide.AllNotificationsStart(worker);
+                        break;
+                    }
+                    case WorkerSideMainMenu.UnreadNotifications:
+                    {
+                        NotificationSide.OnlyUnReadNotificationsStart(worker);
                         break;
                     }
                     case WorkerSideMainMenu.Logout:

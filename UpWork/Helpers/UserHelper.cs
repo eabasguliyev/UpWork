@@ -12,7 +12,7 @@ namespace UpWork.Helpers
     {
         public static string GetString(string errorMessage)
         {
-            var logger = new ConsoleLogger();
+            
             while (true)
             {
                 Console.Write(">> ");
@@ -22,13 +22,13 @@ namespace UpWork.Helpers
                 if (!String.IsNullOrWhiteSpace(str))
                     return str;
 
-                logger.Error(errorMessage);
+                LoggerPublisher.OnLogError(errorMessage);
             }
         }
 
         public static dynamic GetNumeric(NumericTypes type)
         {
-            var logger = new ConsoleLogger();
+            
 
             switch (type)
             {
@@ -46,7 +46,7 @@ namespace UpWork.Helpers
                         }
                         catch (Exception)
                         {
-                            logger.Error("Input must be numeric value!");
+                            LoggerPublisher.OnLogError("Input must be numeric value!");
                         }
                     }
                 }
@@ -64,7 +64,7 @@ namespace UpWork.Helpers
                         }
                         catch (Exception)
                         {
-                            logger.Error("Input must be numeric value!");
+                            LoggerPublisher.OnLogError("Input must be numeric value!");
                         }
                     }
                 }
@@ -112,7 +112,7 @@ namespace UpWork.Helpers
 
         public static Guid InputGuid()
         {
-            var logger = new ConsoleLogger();
+            
 
             Console.WriteLine("Enter guid: ");
             while (true)
@@ -121,9 +121,9 @@ namespace UpWork.Helpers
 
                 if (Guid.TryParse(str, out Guid guid))
                     return guid;
-                
 
-                logger.Error("Invalid guid format!");
+
+                LoggerPublisher.OnLogError("Invalid guid format!");
             }
         }
 
@@ -133,45 +133,45 @@ namespace UpWork.Helpers
         {
             Console.Clear();
             Console.WriteLine("Category:");
-            ConsoleScreen.PrintMenu(Data.Data.Categories, ConsoleColor.Blue);
+            ConsoleScreen.PrintMenu(FileHelper.Categories, ConsoleColor.Blue);
 
-            return Data.Data.Categories[ConsoleScreen.Input(Data.Data.Categories.Count) - 1];
+            return FileHelper.Categories[ConsoleScreen.Input(FileHelper.Categories.Count) - 1];
         }
 
         public static string InputRegion()
         {
             Console.Clear();
             Console.WriteLine("Region:");
-            ConsoleScreen.PrintMenu(Data.Data.Regions, ConsoleColor.Blue);
+            ConsoleScreen.PrintMenu(FileHelper.Regions, ConsoleColor.Blue);
 
-            return Data.Data.Regions[ConsoleScreen.Input(Data.Data.Regions.Count) - 1];
+            return FileHelper.Regions[ConsoleScreen.Input(FileHelper.Regions.Count) - 1];
         }
 
         public static string InputEducation()
         {
             Console.Clear();
             Console.WriteLine("Education:");
-            ConsoleScreen.PrintMenu(Data.Data.Educations, ConsoleColor.Blue);
+            ConsoleScreen.PrintMenu(FileHelper.Educations, ConsoleColor.Blue);
 
-            return Data.Data.Educations[ConsoleScreen.Input(Data.Data.Educations.Count) - 1];
+            return FileHelper.Educations[ConsoleScreen.Input(FileHelper.Educations.Count) - 1];
         }
 
         public static string InputExperience()
         {
             Console.Clear();
             Console.WriteLine("Experience:");
-            ConsoleScreen.PrintMenu(Data.Data.Experiences, ConsoleColor.Blue);
+            ConsoleScreen.PrintMenu(FileHelper.Experiences, ConsoleColor.Blue);
 
-            return Data.Data.Experiences[ConsoleScreen.Input(Data.Data.Experiences.Count) - 1];
+            return FileHelper.Experiences[ConsoleScreen.Input(FileHelper.Experiences.Count) - 1];
         }
 
         public static string InputSalary()
         {
             Console.Clear();
             Console.WriteLine("Salary: ");
-            ConsoleScreen.PrintMenu(Data.Data.Salaries, ConsoleColor.Blue);
+            ConsoleScreen.PrintMenu(FileHelper.Salaries, ConsoleColor.Blue);
 
-            return Data.Data.Salaries[ConsoleScreen.Input(Data.Data.Salaries.Count) - 1];
+            return FileHelper.Salaries[ConsoleScreen.Input(FileHelper.Salaries.Count) - 1];
         }
 
         public static SalaryRange InputSalaryRange()
@@ -191,8 +191,8 @@ namespace UpWork.Helpers
                 if (salaryRange.To >= salaryRange.From)
                     break;
 
-                var logger = new ConsoleLogger();
-                logger.Error("Max salary must be greater than min!");
+                
+                LoggerPublisher.OnLogError("Max salary must be greater than min!");
             }
 
             return salaryRange;

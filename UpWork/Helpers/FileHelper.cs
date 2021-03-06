@@ -5,13 +5,11 @@ using System.Text;
 using Newtonsoft.Json;
 using UpWork.ConsoleInterface;
 using UpWork.Entities;
-using UpWork.Exceptions;
 using UpWork.Logger;
-using UpWork.Sides.Employee;
 
-namespace UpWork.Data
+namespace UpWork.Helpers
 {
-    public static class Data
+    public static class FileHelper
     {
         public static List<string> Categories { get; set; }
         public static List<string> Salaries { get; set; }
@@ -19,9 +17,9 @@ namespace UpWork.Data
         public static List<string> Regions { get; set; }
         public static List<string> Educations { get; set; }
 
-        static Data()
+        static FileHelper()
         {
-            var logger = new ConsoleLogger();
+            
             var directory = @"Data\Categories\";
             if (Directory.Exists(directory))
             {
@@ -38,13 +36,13 @@ namespace UpWork.Data
             }
             else
             {
-                logger.Error($"This directory does not exist -> {directory}");
+                LoggerPublisher.OnLogError($"This directory does not exist -> {directory}");
             }
 
         }
         public static void ReadCategories(string filePath, List<string> list)
         {
-            var logger = new ConsoleLogger();
+            
             try
             {
                 using (var fs = new FileStream(filePath, FileMode.Open))
@@ -60,7 +58,7 @@ namespace UpWork.Data
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                LoggerPublisher.OnLogError(e.Message);
             }
         }
 

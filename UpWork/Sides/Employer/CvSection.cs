@@ -7,6 +7,7 @@ using UpWork.DataFilter;
 using UpWork.Entities;
 using UpWork.Enums;
 using UpWork.Helpers;
+using UpWork.Logger;
 
 namespace UpWork.Sides.Employer
 {
@@ -87,7 +88,7 @@ namespace UpWork.Sides.Employer
                                                 Console.Clear();
                                                 if (!ExceptionHandle.Handle(employer.ShowAllAds, true))
                                                 {
-                                                    logger.Info("Please add public Vacancy!");
+                                                    LoggerPublisher.OnLogInfo("Please add public Vacancy!");
                                                     ConsoleScreen.Clear();
                                                     break;
                                                 }
@@ -102,7 +103,7 @@ namespace UpWork.Sides.Employer
                                                 }
                                                 catch (Exception e)
                                                 {
-                                                    logger.Error(e.Message);
+                                                    LoggerPublisher.OnLogError(e.Message);
                                                     ConsoleScreen.Clear();
                                                 }
                                             }
@@ -127,7 +128,7 @@ namespace UpWork.Sides.Employer
                             }
                             catch (Exception e)
                             {
-                                logger.Error(e.Message);
+                                LoggerPublisher.OnLogError(e.Message);
                             }
                         }
                         break;
@@ -136,28 +137,28 @@ namespace UpWork.Sides.Employer
                     {
                         Console.Clear();
 
-                        cvs = CvFilter.FilterByCategory(UserHelper.InputCategory(), cvs);
+                        cvs = ExceptionHandle.Handle(CvFilter.FilterByCategory, UserHelper.InputCategory(), cvs);
                         break;
                     }
                     case FilterMenuEnum.ByEducation:
                     {
                         Console.Clear();
 
-                        cvs = CvFilter.FilterByEducation(UserHelper.InputEducation(), cvs);
+                        cvs = ExceptionHandle.Handle(CvFilter.FilterByEducation, UserHelper.InputEducation(), cvs);
                         break;
                     }
                     case FilterMenuEnum.ByExperience:
                     {
                         Console.Clear();
 
-                        cvs = CvFilter.FilterByExperience(UserHelper.InputExperience(), cvs);
+                        cvs = ExceptionHandle.Handle(CvFilter.FilterByExperience, UserHelper.InputExperience(), cvs);
                         break;
                     }
                     case FilterMenuEnum.ByRegion:
                     {
                         Console.Clear();
 
-                        cvs = CvFilter.FilterByRegion(UserHelper.InputRegion(), cvs);
+                        cvs = ExceptionHandle.Handle(CvFilter.FilterByRegion, UserHelper.InputRegion(), cvs);
                         break;
                     }
                     case FilterMenuEnum.BySalary:
@@ -166,7 +167,7 @@ namespace UpWork.Sides.Employer
 
                         var input = UserHelper.InputSalary();
                         var salary = UserHelper.ParseSalary(input);
-                        cvs = CvFilter.FilterBySalary(salary, cvs);
+                        cvs = ExceptionHandle.Handle(CvFilter.FilterBySalary, salary, cvs);
                         break;
                     }
                     case FilterMenuEnum.Reset:

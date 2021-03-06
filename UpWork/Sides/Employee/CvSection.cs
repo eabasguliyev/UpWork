@@ -13,7 +13,7 @@ namespace UpWork.Sides.Employee
     {
         public static void Start(Worker worker)
         {
-            var logger = new ConsoleLogger();
+            
 
             var cvSectionLoop = true;
 
@@ -42,7 +42,7 @@ namespace UpWork.Sides.Employee
                         {
                             worker.Cvs.Add(CreateNewCv());
                             Database.Database.Changes = true;
-                            logger.Info("Cv added!");
+                            LoggerPublisher.OnLogInfo("Cv added!");
 
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Cv?",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
@@ -79,7 +79,7 @@ namespace UpWork.Sides.Employee
                             }
                             catch (Exception e)
                             {
-                                logger.Error(e.Message);
+                                LoggerPublisher.OnLogError(e.Message);
                             }
 
                             if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to try again?",
@@ -103,7 +103,7 @@ namespace UpWork.Sides.Employee
 
                             if (ExceptionHandle.Handle(worker.DeleteCv, id))
                             {
-                                logger.Info("Cv deleted!");
+                                LoggerPublisher.OnLogInfo("Cv deleted!");
                                 Database.Database.Changes = true;
                                 
                                 if (worker.Cvs.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete another Cv?",
@@ -130,7 +130,7 @@ namespace UpWork.Sides.Employee
 
         private static Cv CreateNewCv()
         {
-            var logger = new ConsoleLogger();
+            
             var newCv = new Cv();
 
 
@@ -197,7 +197,7 @@ namespace UpWork.Sides.Employee
                             break;
                         }
 
-                        logger.Error("End time must be greater than start time!");
+                        LoggerPublisher.OnLogError("End time must be greater than start time!");
                     }
 
                     newCv.WorkPlaces.Add(new WorkPlace()
@@ -255,7 +255,7 @@ namespace UpWork.Sides.Employee
         }
         private static void CvUpdateSideStart(Cv cv)
         {
-            var logger = new ConsoleLogger();
+            
 
             while (true)
             {
@@ -277,7 +277,7 @@ namespace UpWork.Sides.Employee
                     case CvUpdateChoices.ChangeVisibility:
                     {
                         cv.IsPublic = !cv.IsPublic;
-                        logger.Info($"Visibility changed to {(cv.IsPublic ? "Public":"Private")}");
+                        LoggerPublisher.OnLogInfo($"Visibility changed to {(cv.IsPublic ? "Public":"Private")}");
                         break;
                     }
                     case CvUpdateChoices.Name:
@@ -285,7 +285,7 @@ namespace UpWork.Sides.Employee
                         Console.Clear();
 
                         cv.Name = CvHelper.InputData("Name");
-                        logger.Info("Name updated!");
+                        LoggerPublisher.OnLogInfo("Name updated!");
                         break;
                     }
                     case CvUpdateChoices.Surname:
@@ -293,20 +293,20 @@ namespace UpWork.Sides.Employee
                         Console.Clear();
 
                         cv.Surname = CvHelper.InputData("Surname");
-                        logger.Info("Surname updated!");
+                        LoggerPublisher.OnLogInfo("Surname updated!");
                         break;
                         }
                     case CvUpdateChoices.Category:
                     {
                         cv.Category = UserHelper.InputCategory();
 
-                        logger.Info("Category updated!");
+                        LoggerPublisher.OnLogInfo("Category updated!");
                         break;
                     }
                     case CvUpdateChoices.Region:
                     {
                         cv.Region = UserHelper.InputRegion();
-                        logger.Info("Region updated!");
+                        LoggerPublisher.OnLogInfo("Region updated!");
                             break;
                     }
                     case CvUpdateChoices.Salary:
@@ -314,21 +314,21 @@ namespace UpWork.Sides.Employee
                         Console.Clear();
                         Console.WriteLine("Salary: ");
                         cv.Salary = UserHelper.GetNumeric(NumericTypes.INT);
-                        logger.Info("Salary updated!");
+                        LoggerPublisher.OnLogInfo("Salary updated!");
                             break;
                     }
                     case CvUpdateChoices.Education:
                     {
                         cv.Education = UserHelper.InputEducation();
 
-                        logger.Info("Education updated");
+                        LoggerPublisher.OnLogInfo("Education updated");
                             break;
                     }
                     case CvUpdateChoices.Experience:
                     {
                         cv.Experience = UserHelper.InputExperience();
 
-                        logger.Info("Experience updated!");
+                        LoggerPublisher.OnLogInfo("Experience updated!");
                             break;
                     }
                     case CvUpdateChoices.WorkPlaces:
@@ -356,7 +356,7 @@ namespace UpWork.Sides.Employee
                                             break;
                                         }
 
-                                        logger.Error("End time must be greater than start time!");
+                                        LoggerPublisher.OnLogError("End time must be greater than start time!");
                                     }
 
                                     cv.WorkPlaces.Add(new WorkPlace()
@@ -365,7 +365,7 @@ namespace UpWork.Sides.Employee
                                         Timeline = timeline
                                     });
 
-                                    logger.Info("Workplace added");
+                                    LoggerPublisher.OnLogInfo("Workplace added");
                                     if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more WorkPlaces?",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                                         break;
@@ -389,7 +389,7 @@ namespace UpWork.Sides.Employee
 
                                         if (ExceptionHandle.Handle(cv.DeleteWorkplace, workplaceId))
                                         {
-                                            logger.Info("Workplace deleted");
+                                            LoggerPublisher.OnLogInfo("Workplace deleted");
 
 
                                             if (cv.WorkPlaces.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more WorkPlaces?",
@@ -415,7 +415,7 @@ namespace UpWork.Sides.Employee
                                         Level = CvHelper.InputSkillLevel(),
                                     });
 
-                                    logger.Info("Skill added");
+                                    LoggerPublisher.OnLogInfo("Skill added");
                                     if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Skills?",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                                         break;
@@ -438,7 +438,7 @@ namespace UpWork.Sides.Employee
 
                                         if (ExceptionHandle.Handle(cv.DeleteSkill, skillId))
                                         {
-                                            logger.Info("Skill deleted");
+                                            LoggerPublisher.OnLogInfo("Skill deleted");
 
 
                                             if (cv.Skills.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more Skill?",
@@ -464,7 +464,7 @@ namespace UpWork.Sides.Employee
                                         Level = CvHelper.InputSkillLevel(),
                                     });
 
-                                    logger.Info("Language added");
+                                    LoggerPublisher.OnLogInfo("Language added");
                                     if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Languages?",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                                         break;
@@ -487,7 +487,7 @@ namespace UpWork.Sides.Employee
 
                                         if (ExceptionHandle.Handle(cv.DeleteLanguage, skillId))
                                         {
-                                            logger.Info("Language deleted");
+                                            LoggerPublisher.OnLogInfo("Language deleted");
 
 
                                             if (cv.Languages.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more Language?",
@@ -503,7 +503,7 @@ namespace UpWork.Sides.Employee
                         {
                             cv.HonorsDiploma = CvHelper.InputHonorsDiplomaStatus();
 
-                            logger.Info("Honors diploma updated!");
+                            LoggerPublisher.OnLogInfo("Honors diploma updated!");
                             break;
                         }
                     case CvUpdateChoices.Socials:
@@ -520,7 +520,7 @@ namespace UpWork.Sides.Employee
                                         Link = CvHelper.InputLink()
                                     });
 
-                                    logger.Info("Social added");
+                                    LoggerPublisher.OnLogInfo("Social added");
                                     if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to add more Socials?",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
                                         break;
@@ -543,7 +543,7 @@ namespace UpWork.Sides.Employee
 
                                         if (ExceptionHandle.Handle(cv.DeleteSocial, socialId))
                                         {
-                                            logger.Info("Social deleted");
+                                            LoggerPublisher.OnLogInfo("Social deleted");
 
 
                                             if (cv.Socials.Count == 0 || ConsoleScreen.DisplayMessageBox("Info", "Do you want to delete more Social?",

@@ -24,13 +24,13 @@ namespace UpWork.ConsoleInterface
         {
             UserAccess = new List<string>() {"Login", "Register", "Exit"};
             UserType = new List<string>() {"Worker", "Employer"};
-            WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Cv Notifications", "See Notifications", "Logout"};
+            WorkerSideMainMenu = new List<string>() {"See ads", "Your CV", "Cv Notifications", "See Notifications (All)", "See Notifications (Unread)", "Logout" };
             CvSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             SkillLevels = new List<string>() {"Beginner", "Intermediate", "Advanced"};
             CvUpdateMenu = new List<string>()
                 {"Change visibility", "Name", "Surname", "Category", "Region", "Salary", "Education", "Experience", "WorkPlaces", "Skills", "Languages", "HonorsDiploma", "Socials", "Back"};
 
-            EmployerSideMainMenu = new List<string>() {"Your ads", "See Cvs", "Ads Notifications", "See notifications", "Logout"};
+            EmployerSideMainMenu = new List<string>() {"Your ads", "See Cvs", "Ads Notifications", "See Notifications (All)", "See Notifications (Unread)", "Logout"};
             AdsSectionMenu = new List<string>() {"Show", "Add", "Update", "Delete", "Back"};
             VacancyUpdateMenu = new List<string>()
             {
@@ -44,7 +44,7 @@ namespace UpWork.ConsoleInterface
 
         public static int Input(int length)
         {
-            var logger = new ConsoleLogger();
+            
            
             while (true)
             {
@@ -56,12 +56,12 @@ namespace UpWork.ConsoleInterface
                 {
                     if (choice > 0 && choice <= length)
                         return choice;
-                    
-                    logger.Error($"Input must be between [ 1 - {length} ]!");  
+
+                    LoggerPublisher.OnLogError($"Input must be between [ 1 - {length} ]!");  
                 }
                 else
                 {
-                    logger.Error("Please enter numeric value!");
+                    LoggerPublisher.OnLogError("Please enter numeric value!");
                 }
             }
         }

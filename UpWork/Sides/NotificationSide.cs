@@ -9,11 +9,20 @@ namespace UpWork.Sides
 {
     public static class NotificationSide
     {
-        public static void Start(User user)
+        public static void AllNotificationsStart(User user)
+        {
+            Start(user, false);
+        }
+
+        public static void OnlyUnReadNotificationsStart(User user)
+        {
+            Start(user, true);
+        }
+        private static void Start(User user, bool notificationStatus)
         {
             while (true)
             {
-                if (!ExceptionHandle.Handle(user.ShowShortNotfInfo))
+                if (!ExceptionHandle.Handle(user.ShowShortNotfInfo, notificationStatus))
                 {
                     ConsoleScreen.Clear();
                     break;
@@ -33,7 +42,10 @@ namespace UpWork.Sides
                 }
 
                 Console.Clear();
-                Console.WriteLine(notification);
+                Console.WriteLine(notification++);
+
+                
+                Console.ReadLine();
 
                 if (ConsoleScreen.DisplayMessageBox("Info", "Do you want to see other notifications?",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)

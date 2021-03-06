@@ -5,7 +5,7 @@ using UpWork.Entities;
 namespace UpWork.NotificationSender
 {
     public delegate void NotificationSender(User user, Notification notification);
-    public class Publisher
+    public class NotificationPublisher
     {
         public static event NotificationSender EventHandler;
 

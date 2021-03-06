@@ -9,7 +9,7 @@ using UpWork.Enums;
 
 using UpWork.Helpers;
 using UpWork.Logger;
-using Publisher = UpWork.NotificationSender.Publisher;
+using NotificationPublisher = UpWork.NotificationSender.NotificationPublisher;
 
 namespace UpWork.Sides.Employer
 {
@@ -18,7 +18,7 @@ namespace UpWork.Sides.Employer
         public static void Start(Entities.Employer employer, Database.Database db)
         {
 
-            var logger = new ConsoleLogger();
+            
             var employerSideMainLoop = true;
 
             while (employerSideMainLoop)
@@ -27,7 +27,7 @@ namespace UpWork.Sides.Employer
 
                 if (Database.Database.Changes)
                 {
-                    Data.Data.WriteToJson(db);
+                    FileHelper.WriteToJson(db);
                     Database.Database.Changes = false;
                 }
                 Console.Clear();
@@ -83,7 +83,7 @@ namespace UpWork.Sides.Employer
 
                                         if (cv == null)
                                         {
-                                            logger.Error($"There is no cv associated this id -> {cvId}");
+                                            LoggerPublisher.OnLogError($"There is no cv associated this id -> {cvId}");
                                             ConsoleScreen.Clear();
                                             continue;
                                         }
@@ -114,22 +114,22 @@ namespace UpWork.Sides.Employer
                                                 {
                                                     vacancy.RemoveRequest(worker.Guid);
 
-                                                    Publisher.OnSend(worker, new Notification(){Title="Your apply result", Message = $"Congratilations. Your cv accepted.\n Vacancy info:\n{vacancy}"});
-                                                    logger.Info("Accepted.");
+                                                    NotificationPublisher.OnSend(worker, new Notification(){Title="Your apply result", Message = $"Congratilations. Your cv accepted.\n Vacancy info:\n{vacancy}"});
+                                                    LoggerPublisher.OnLogInfo("Accepted.");
                                                     break;
                                                 }
                                                 case CvAdsChoices.Decline:
                                                 {
                                                     vacancy.RemoveRequest(worker.Guid);
-                                                    Publisher.OnSend(worker, new Notification() { Title = "Your apply result", Message = $"We are sorry! Your cv declined.\n Vacancy info:\n{vacancy}" });
-                                                    logger.Info("Declined.");
+                                                    NotificationPublisher.OnSend(worker, new Notification() { Title = "Your apply result", Message = $"We are sorry! Your cv declined.\n Vacancy info:\n{vacancy}" });
+                                                    LoggerPublisher.OnLogInfo("Declined.");
                                                     break;
                                                 }
                                             }
                                         }
                                         catch (Exception e)
                                         {
-                                            logger.Error(e.Message);
+                                            LoggerPublisher.OnLogError(e.Message);
                                             ConsoleScreen.Clear();
                                         }
 
@@ -142,13 +142,13 @@ namespace UpWork.Sides.Employer
                                 }
                                 else
                                 {
-                                    logger.Error("There is no request!");
+                                    LoggerPublisher.OnLogError("There is no request!");
                                     ConsoleScreen.Clear();
                                 }
                             }
                             catch (Exception e)
-                            { 
-                                logger.Error(e.Message);  
+                            {
+                                LoggerPublisher.OnLogError(e.Message);  
                                 ConsoleScreen.Clear();
                             }
 
@@ -159,9 +159,14 @@ namespace UpWork.Sides.Employer
 
                         break;
                     }
-                    case EmployerSideMainMenu.SeeNotifications:
+                    case EmployerSideMainMenu.AllNotifications:
                     {
-                        NotificationSide.Start(employer);
+                        NotificationSide.AllNotificationsStart(employer);
+                        break;
+                    }
+                    case EmployerSideMainMenu.UnreadNotifications:
+                    {
+                        NotificationSide.OnlyUnReadNotificationsStart(employer);
                         break;
                     }
                     case EmployerSideMainMenu.Logout:

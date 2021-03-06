@@ -5,6 +5,7 @@ namespace UpWork.Entities
 {
     public class Notification:Id
     {
+        public bool IsRead { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
 
@@ -13,6 +14,13 @@ namespace UpWork.Entities
             return $@"Title: {Title}
 Message:
 {Message}";
+        }
+
+        public static Notification operator ++(Notification notification)
+        {
+            notification.IsRead = true;
+
+            return notification;
         }
     }
 }

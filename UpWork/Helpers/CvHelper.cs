@@ -53,7 +53,7 @@ namespace UpWork.Helpers
 
         public static DateTime InputDateTime(string message)
         {
-            var logger = new ConsoleLogger();
+            
             Console.WriteLine(message);
 
             while (true)
@@ -64,8 +64,8 @@ namespace UpWork.Helpers
 
                 if (result)
                     return dateTime;
-                
-                logger.Error("Invalid date time format!");
+
+                LoggerPublisher.OnLogError("Invalid date time format!");
             }
         }
 
