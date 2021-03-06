@@ -1,0 +1,193 @@
+﻿[
+  {
+    "Cvs": [
+      {
+        "IsPublic": true,
+        "Name": "Amin",
+        "Surname": "Abdullayev",
+        "Category": "Programming",
+        "Education": "Higher",
+        "Experience": "Less than 1 year",
+        "Region": "Baku",
+        "Salary": 1000,
+        "Skills": [
+          {
+            "Name": "React Js (Hooks, Context Api)",
+            "Level": 2,
+            "Guid": "1cfd9ec4-dfc0-4a06-a094-bbd752de8f35"
+          },
+          {
+            "Name": "Html5",
+            "Level": 2,
+            "Guid": "51978953-9ae7-46e5-9a35-1e41b8bde4f4"
+          },
+          {
+            "Name": "CSS3",
+            "Level": 2,
+            "Guid": "07a94ec1-35c8-4693-a816-49846946c0af"
+          },
+          {
+            "Name": "Bootstrap5",
+            "Level": 2,
+            "Guid": "499dfc51-41d7-4057-b86f-a03145da6711"
+          },
+          {
+            "Name": "Javascript",
+            "Level": 2,
+            "Guid": "4a20750f-6714-47e8-8cb3-dabb9315e947"
+          },
+          {
+            "Name": "Sql",
+            "Level": 2,
+            "Guid": "82fb923b-7542-424a-80a6-98ec2c94252f"
+          }
+        ],
+        "WorkPlaces": [],
+        "Languages": [
+          {
+            "Name": "English",
+            "Level": 2,
+            "Guid": "77353b4a-9957-48c7-829c-adf8dbf3cd86"
+          }
+        ],
+        "HonorsDiploma": false,
+        "Socials": [],
+        "Views": 0,
+        "RequestFromEmployers": {},
+        "Guid": "e47c422f-b8d0-4af0-b907-eacd91a2756a"
+      }
+    ],
+    "Name": "Amin",
+    "Surname": "Abdullayev",
+    "Mail": "amin.abdullayev@upwork.com",
+    "Username": "amin",
+    "Password": "29a669940f66f7d5d5539801dc422018a92d4799060e2c576d9a30887eba605a",
+    "City": "Baku",
+    "Phone": "0704400500",
+    "Age": 25,
+    "Notifications": [],
+    "Guid": "0df974ca-516e-4fca-b6b3-59030e1e53bf"
+  },
+  {
+    "Cvs": [
+      {
+        "IsPublic": true,
+        "Name": "Yusif",
+        "Surname": "Eliyev",
+        "Category": "Courier ",
+        "Education": "Incomplete Higher",
+        "Experience": "from 1 to 3 years",
+        "Region": "Baku",
+        "Salary": 500,
+        "Skills": [],
+        "WorkPlaces": [],
+        "Languages": [
+          {
+            "Name": "russian",
+            "Level": 2,
+            "Guid": "96139436-fd3a-4ea0-8fab-8a2907c91caa"
+          }
+        ],
+        "HonorsDiploma": false,
+        "Socials": [],
+        "Views": 2,
+        "RequestFromEmployers": {
+          "196f7888-9392-4139-9a8c-f023d6e1263c": "23dad1c7-4a90-49b0-97c5-e1619b8e5ec2"
+        },
+        "Guid": "47fca365-f855-45df-9c0f-51558b4d56ad"
+      }
+    ],
+    "Name": "Yusif",
+    "Surname": "Abdulla",
+    "Mail": "yusif.abdulla@upwork.com",
+    "Username": "yusif",
+    "Password": "20ddfa5808fa749af481d48ad8a87017abcdb0c26345881ea044ac9bd97fa7f5",
+    "City": "Baku",
+    "Phone": "0774331858",
+    "Age": 23,
+    "Notifications": [],
+    "Guid": "c8945ee9-74f1-4c84-80d2-1955309e6196"
+  },
+  {
+    "Cvs": [
+      {
+        "IsPublic": true,
+        "Name": "Elgun",
+        "Surname": "Abasquliyev",
+        "Category": "Programming",
+        "Education": "Incomplete Higher",
+        "Experience": "Less than 1 year",
+        "Region": "Baku",
+        "Salary": 800,
+        "Skills": [
+          {
+            "Name": "C/C++",
+            "Level": 2,
+            "Guid": "28a919c3-1ef3-48c9-9e1a-a088f82ebbdd"
+          },
+          {
+            "Name": "C#",
+            "Level": 3,
+            "Guid": "0d5859ce-242f-498a-8c7c-b28fe4a59c13"
+          },
+          {
+            "Name": "Python",
+            "Level": 1,
+            "Guid": "2d291b2b-034a-442a-8f45-0843ee2e760e"
+          },
+          {
+            "Name": "Bash",
+            "Level": 1,
+            "Guid": "65632c7c-fce4-4d41-a9d6-c370c9b20ec3"
+          },
+          {
+            "Name": "Git",
+            "Level": 1,
+            "Guid": "7d236aba-bbf5-4b1a-bab3-9dcbb1a98577"
+          },
+          {
+            "Name": "Linux",
+            "Level": 1,
+            "Guid": "ac45cfc0-f4ff-40ad-8142-adb658337ae0"
+          }
+        ],
+        "WorkPlaces": [],
+        "Languages": [
+          {
+            "Name": "English",
+            "Level": 2,
+            "Guid": "eed42f3c-c1cc-431a-b076-832e45bb4fb9"
+          }
+        ],
+        "HonorsDiploma": false,
+        "Socials": [
+          {
+            "Name": "twitter",
+            "Link": "https://twitter.com/eabasquliyev",
+            "Guid": "6df313ea-8783-47cd-b064-0c336516e057"
+          }
+        ],
+        "Views": 1,
+        "RequestFromEmployers": {},
+        "Guid": "4d2cbb84-8f96-4734-b331-81f869946271"
+      }
+    ],
+    "Name": "elgun",
+    "Surname": "abasquliyev",
+    "Mail": "elgunabasquliyev@upwork.com",
+    "Username": "elgun",
+    "Password": "8d4fb55a4e490e6b7ef3f0f80ce0fa3357fd9455cc25005470088a30a5c9617c",
+    "City": "Baku",
+    "Phone": "0774241245",
+    "Age": 20,
+    "Notifications": [
+      {
+        "IsRead": false,
+        "Title": "Your apply result",
+        "Message": "Congratilations. Your cv accepted.\n Vacancy info:\nId: 23dad1c7-4a90-49b0-97c5-e1619b8e5ec2\r\nContact:\r\nId: 4b1ecc12-e2b9-4224-8cdc-4f3d30b1b9e5\r\nMail: emin.eliyev@upwork.com\r\nPhones: \r\n1. 0324234234\n\r\nAd:\r\nId: 0bc52f01-44c6-4782-abbb-3d39c0343dec\r\nCategory: Web Design\r\nPosition: front end developer\r\nRegion: Baku\r\nSalary: \r\nFrom: 2000\r\nTo: 3000\r\nEducation: Higher\r\nExperience: from 1 to 3 years\r\nRequirements: lab lab lab\r\nJobDescription: lab lab lab\r\nCompany: step\r\nContact: emin\r\n\r\nView(s): 2",
+        "Guid": "adcc95e9-8848-48e2-b799-8315ce842f0e"
+      }
+    ],
+    "Guid": "45402890-c442-4a69-9f49-754422ae381e"
+  }
+]
